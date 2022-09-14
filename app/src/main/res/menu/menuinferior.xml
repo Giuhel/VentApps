@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Inicio"
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_home"/>
+    <item android:title="Inventario"
+        android:id="@+id/menu_inventario"
+        android:icon="@drawable/ic_inventario"/>
+    <item android:title="Estadisticas"
+        android:id="@+id/menu_estadisticas"
+        android:icon="@drawable/ic_estadistica"/>
+    <item android:title="Acerca De"
+        android:id="@+id/menu_acercade"
+        android:icon="@drawable/ic_acercade"/>
+
+</menu>

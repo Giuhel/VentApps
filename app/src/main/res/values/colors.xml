@@ -7,7 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="verdePastel">#77dd77</color>
-    <color name="verdePastel2">#2d8f2f</color>
+    <color name="verdePastel">#338b85</color>
+    <color name="verdePastel2">#005954</color>
     <color name="gris">#E8EBEC</color>
+    <color name="gris2">#d8dada</color>
 </resources>

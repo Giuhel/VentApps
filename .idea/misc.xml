@@ -7,8 +7,11 @@
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/edittext_bg.xml" value="0.1945" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_fondologin.xml" value="0.1945" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_login.xml" value="0.33" />
-        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_slpash.xml" value="0.22" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_splash.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/menu/buttom_menu.xml" value="0.203125" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/menu/menuinferior.xml" value="0.203125" />
       </map>
     </option>
   </component>

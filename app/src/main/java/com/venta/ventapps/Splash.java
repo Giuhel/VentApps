@@ -25,17 +25,15 @@ public class Splash extends AppCompatActivity {
         Animation animation2= AnimationUtils.loadAnimation(this,R.anim.desplazar_abajo);
 
         TextView marca=findViewById(R.id.nomapp);
-        TextView by=findViewById(R.id.bytext);
         ImageView logo=findViewById(R.id.logosp);
 
         marca.setAnimation(animation2);
-        by.setAnimation(animation2);
         logo.setAnimation(animation1);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(Splash.this, Login.class);
+                Intent intent = new Intent(Splash.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
