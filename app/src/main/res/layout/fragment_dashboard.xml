@@ -15,7 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="140dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -35,14 +35,27 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/imageView2"
                 android:layout_width="88dp"
                 android:layout_height="79dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/icono2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.07"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="Bienvenido"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -67,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="30dp"
                     android:gravity="center">
 
                     <LinearLayout
@@ -77,7 +90,7 @@
                         android:layout_margin="15dp">
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="80dp"
                             android:elevation="4dp"
                             app:cardCornerRadius="8dp">
@@ -95,7 +108,7 @@
                             android:text="Tipo Pago"
                             android:textStyle="bold"
                             android:textSize="15sp"
-                            android:textColor="@color/verdePastel"
+                            android:textColor="@color/grisletrasmenu"
                             android:layout_gravity="center
 "
                             android:layout_marginTop="2dp"/>
@@ -109,7 +122,7 @@
                         android:layout_margin="15dp">
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="80dp"
                             android:elevation="4dp"
                             app:cardCornerRadius="8dp">
@@ -127,7 +140,7 @@
                             android:text="Categorias"
                             android:textStyle="bold"
                             android:textSize="15sp"
-                            android:textColor="@color/verdePastel"
+                            android:textColor="@color/grisletrasmenu"
                             android:layout_gravity="center
 "
                             android:layout_marginTop="2dp"/>
@@ -141,7 +154,7 @@
                         android:layout_margin="15dp">
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="80dp"
                             android:elevation="4dp"
                             app:cardCornerRadius="8dp">
@@ -159,7 +172,7 @@
                             android:text="Ventas"
                             android:textStyle="bold"
                             android:textSize="15sp"
-                            android:textColor="@color/verdePastel"
+                            android:textColor="@color/grisletrasmenu"
                             android:layout_gravity="center
 "
                             android:layout_marginTop="2dp"/>
@@ -181,7 +194,7 @@
                         android:layout_margin="15dp">
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="80dp"
                             android:elevation="4dp"
                             app:cardCornerRadius="8dp">
@@ -199,7 +212,7 @@
                             android:text="Ayuda"
                             android:textStyle="bold"
                             android:textSize="15sp"
-                            android:textColor="@color/verdePastel"
+                            android:textColor="@color/grisletrasmenu"
                             android:layout_gravity="center
 "
                             android:layout_marginTop="2dp"/>
@@ -207,7 +220,6 @@
                     </LinearLayout>
 
                 </TableRow>
-
 
             </TableLayout>
 
