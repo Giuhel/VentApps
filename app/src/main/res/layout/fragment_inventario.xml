@@ -8,8 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/verdePastel">
+        android:layout_height="160dp"
+        android:background="@color/Pastel">
 
         <TextView
             android:id="@+id/textView5"
@@ -26,44 +26,119 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
+            android:paddingTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="150dp"
-                android:layout_height="130dp"
+                android:layout_height="80dp"
                 app:cardCornerRadius="10dp"
-                android:elevation="4dp">
+                android:elevation="4dp"
+                android:layout_marginRight="40sp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Categorias"
-                    android:textSize="16sp"
+                    android:textSize="19sp"
                     android:textStyle="bold"
+                    android:layout_marginTop="10sp"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="35dp"
                     android:layout_gravity="center_horizontal"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="150dp"
-                android:layout_height="130dp"
+                android:layout_height="80dp"
                 app:cardCornerRadius="10dp"
                 android:elevation="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Categorias"
-                    android:textSize="16sp"
+                    android:text="Productos"
+                    android:textSize="19sp"
                     android:textStyle="bold"
+                    android:layout_marginTop="10sp"
                     android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="35dp"
+                    android:layout_gravity="center_horizontal"/>
+
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="161dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/BtnCreaCatego"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="16dp"
+            android:text="+ Crear Categoría"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/Pastel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/BtnCreaProdu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:text="+ Crear Producto"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/Boton2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/BtnCreaCatego"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/Rcvlistcategoria"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/BtnCreaCatego"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

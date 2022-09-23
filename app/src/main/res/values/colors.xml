@@ -7,10 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="verdePastel">#338b85</color>
-    <color name="verdePastel2">#005954</color>
+    <color name="Pastel">#2C3E50</color>
+    <color name="Pastel2">#212F3D</color>
     <color name="gris">#E8EBEC</color>
     <color name="gris2">#d8dada</color>
     <color name="grisDahboard">#EAEAEA</color>
     <color name="grisletrasmenu">#5C5C5C</color>
+    <color name="Boton2">#ff9800</color>
 </resources>
