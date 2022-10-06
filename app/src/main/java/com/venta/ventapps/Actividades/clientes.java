@@ -14,5 +14,10 @@ public class clientes extends AppCompatActivity {
     }
 
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnAtrasC:
+                finish();
+                break;
+        }
     }
 }

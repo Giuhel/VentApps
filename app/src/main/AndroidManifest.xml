@@ -14,7 +14,7 @@
         android:theme="@style/Theme.VentApps"
         tools:targetApi="31">
         <activity
-            android:name=".clientes"
+            android:name=".Actividades.clientes"
             android:exported="false" />
         <activity
             android:name=".Actividades.productos"
