@@ -3,6 +3,7 @@ package com.venta.ventapps.Actividades;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.LayoutTransition;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.AutoTransition;
@@ -25,7 +26,7 @@ public class Ayuda extends AppCompatActivity {
 
         texto1=findViewById(R.id.texto1);
         desplegar1=findViewById(R.id.despliega1);
-
+        desplegar1.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
 
     }
 
