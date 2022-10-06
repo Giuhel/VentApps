@@ -14,6 +14,9 @@
         android:theme="@style/Theme.VentApps"
         tools:targetApi="31">
         <activity
+            android:name=".Actividades.Ayuda"
+            android:exported="false" />
+        <activity
             android:name=".Actividades.clientes"
             android:exported="false" />
         <activity
@@ -30,7 +33,7 @@
         </activity>
         <activity
             android:name=".Login.Login"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
