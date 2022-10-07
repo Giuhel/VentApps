@@ -4,4 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="AcercaDE">VentApps es una herramienta para La gestion de un negocio, puedes registrar categorias, productos, registrar ventas. Los registros se guardan de manera local en tu smartphone, si desinstalas la App no reuperaras tu archivos</string>
     <string name="siDesistalaApp">Si tiene Datos registrados y desinstala la App no podra recuperar los registros y empezara desde 0</string>
+    <string name="agregarProducto">Para Agregar un producto primero debes registrar categorias, si estas no las tienes no podras registrar tus productos.</string>
+    <string name="cantRegistros">Puedes Hacer la cantidad de registros que desees, esto va a depender de la capacidada de memoria de tu dispositivo ya que los registros se almacenaran en los archivos.</string>
+    <string name="sugerencias">Puedes enviar tus sugerencias para poder mejorar la Aplicacion, solo presiona el boton Verde, Tambien para cualquien otra consulta.</string>
+    <string name="pedirApp">Si puedes pedir una App para tu negocio, puedes consultar en el apartado de "Acerda de" entrando a nuestras redes sociales para Cotizar tu Aplicacion</string>
 </resources>
