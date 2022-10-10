@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.venta.ventapps.Actividades.Ayuda;
 import com.venta.ventapps.Actividades.clientes;
+import com.venta.ventapps.Actividades.ventas;
 import com.venta.ventapps.MainActivity;
 import com.venta.ventapps.R;
 import com.venta.ventapps.Splash;
@@ -61,7 +62,7 @@ public class dashboard extends Fragment {
         }
     }
 
-    LinearLayout menuClientes,menuAyuda;
+    LinearLayout menuClientes,menuAyuda,menuventa;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,9 +72,11 @@ public class dashboard extends Fragment {
 
         menuClientes=vista.findViewById(R.id.menuClientes);
         menuAyuda=vista.findViewById(R.id.menuAyuda);
+        menuventa=vista.findViewById(R.id.menuVenta);
 
         menuClientes();
         menuAyudaa();
+        menuVenta();
 
         return vista;
     }
@@ -93,6 +96,16 @@ public class dashboard extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), Ayuda.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void menuVenta(){
+        menuventa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ventas.class);
                 startActivity(intent);
             }
         });
