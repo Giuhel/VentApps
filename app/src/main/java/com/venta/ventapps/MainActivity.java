@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.venta.ventapps.Actividades.productos;
+import com.venta.ventapps.Entidades.conexionSQLite;
 import com.venta.ventapps.fragmentos.Inventario;
 import com.venta.ventapps.fragmentos.acerca_de;
 import com.venta.ventapps.fragmentos.dashboard;
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        conexionSQLite conn=new conexionSQLite(this,"ventApps",null,1);
 
         inicializarObjetos();
         initvalues();
