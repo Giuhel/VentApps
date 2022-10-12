@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="145dp"
         android:background="@color/Pastel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20sp"
+            android:layout_marginLeft="60sp"
             android:layout_marginTop="20sp"
             android:text="Agregar Cliente"
             android:textColor="@color/white"
@@ -40,13 +40,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardtotalClientes"
+            android:id="@+id/irlistaClientes"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginRight="20dp"
             app:cardCornerRadius="20sp"
+            android:onClick="onClick"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10">
@@ -70,21 +71,23 @@
                     android:textColor="@color/Pastel"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginLeft="10sp"/>
+                    android:layout_marginLeft="5sp"/>
 
                 <TextView
+                    android:id="@+id/totalCliente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20"
                     android:textColor="@color/Pastel"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginLeft="15sp"/>
+                    android:layout_marginLeft="2sp"/>
 
                 <ImageView
                     android:layout_width="50sp"
                     android:layout_height="50sp"
                     android:src="@drawable/ic_ir"
+                    android:layout_marginEnd="10sp"
                     android:layout_marginLeft="20sp"/>
 
             </LinearLayout>
@@ -107,8 +110,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="13dp"
             android:text="1"
+            android:layout_marginTop="5sp"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -119,8 +122,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
+            android:layout_marginTop="5sp"
             android:background="@drawable/edittext_bg"
             android:hint="Nombre Cliente"
             android:inputType="text"

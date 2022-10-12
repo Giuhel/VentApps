@@ -1,7 +1,9 @@
 package com.venta.ventapps.Actividades;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -14,17 +16,21 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.venta.ventapps.Entidades.conexionSQLite;
+import com.venta.ventapps.MainActivity;
 import com.venta.ventapps.R;
+import com.venta.ventapps.Splash;
 import com.venta.ventapps.utilidades.Utilidades;
 
 public class clientes extends AppCompatActivity {
 
-    TextView idcliente;
+    TextView idcliente,totalClient;
     TextInputLayout nombre,ndocument,telefo,correo;
     Spinner tipodocu;
     MaterialButton crearCliente;
 
     conexionSQLite conn;
+    int siguienteId;
+    String accion="guardar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +44,12 @@ public class clientes extends AppCompatActivity {
         telefo=findViewById(R.id.txttelefonoclien);
         correo=findViewById(R.id.txtcorreocliente);
         crearCliente=findViewById(R.id.btnCreaCliente);
+        totalClient=findViewById(R.id.totalCliente);
 
         conn=new conexionSQLite(getApplicationContext(),"ventApps",null,1);
 
         llenarSpiner();
+        TotalClientes();
         IdCliente();
 
         crearCliente.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +65,11 @@ public class clientes extends AppCompatActivity {
             case R.id.btnAtrasC:
                 finish();
                 break;
+            case R.id.irlistaClientes:
+                Intent intent = new Intent(this, ListadeCientes.class);
+                startActivity(intent);
+                finish();
+                break;
         }
     }
 
@@ -66,17 +79,35 @@ public class clientes extends AppCompatActivity {
         tipodocu.setAdapter(adapter);
     }
 
+    private void TotalClientes(){
+        SQLiteDatabase db=conn.getReadableDatabase();
+        int total;
+        try {
+            Cursor cursor =db.rawQuery("select count(*) from "+Utilidades.TABLA_CLIENTE,null);
+            cursor.moveToFirst();
+            total=cursor.getInt(0);
+            totalClient.setText(total+"");
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void IdCliente(){
         SQLiteDatabase db=conn.getReadableDatabase();
-        int siguienteId;
         try {
             Cursor cursor =db.rawQuery("select max("+Utilidades.CAMPO_ID+") from "+Utilidades.TABLA_CLIENTE,null);
             cursor.moveToFirst();
-            siguienteId=(cursor.getInt(0))+1;
-            idcliente.setText(siguienteId+"");
+            siguienteId=cursor.getInt(0);
+            if(siguienteId==0){
+                siguienteId=1;
+                idcliente.setText("ID de CLiente es: "+siguienteId);
+            }else{
+                siguienteId=siguienteId+1;
+                idcliente.setText("ID de Cliente: "+siguienteId+"");
+            }
             cursor.close();
         } catch (Exception e) {
-            idcliente.setText("1");
             e.printStackTrace();
         }
     }
@@ -85,7 +116,7 @@ public class clientes extends AppCompatActivity {
         SQLiteDatabase db=conn.getWritableDatabase();
         ContentValues values=new ContentValues();
 
-        values.put(Utilidades.CAMPO_ID,idcliente.getText().toString());
+        values.put(Utilidades.CAMPO_ID,siguienteId);
         values.put(Utilidades.CAMPO_NOMBRE,nombre.getEditText().getText().toString());
         values.put(Utilidades.CAMPO_TIPODOC,tipodocu.getSelectedItem().toString());
         values.put(Utilidades.CAMPO_NDOC,ndocument.getEditText().getText().toString());
@@ -99,6 +130,7 @@ public class clientes extends AppCompatActivity {
     }
 
     private void limpiacampos(){
+        TotalClientes();
         IdCliente();
         nombre.getEditText().setText("");
         ndocument.getEditText().setText("");
