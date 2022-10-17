@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Pastel"
-    tools:context=".Actividades.ListadeCientes">
+    tools:context=".Actividades.clientes.ListadeCientes">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout6"
@@ -57,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
-            android:hint="Documento"
             app:endIconMode="clear_text"
             android:inputType="text"
             app:startIconDrawable="@drawable/ic_ndoc"
@@ -68,8 +67,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:inputType="text" />
+                android:background="@color/white"
+                android:inputType="text"
+                android:hint="Documento"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,6 +81,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             app:cornerRadius="10sp"
+            android:onClick="onClick"
             app:icon="@drawable/ic_buscar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

@@ -11,11 +11,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.venta.ventapps.Actividades.Ayuda;
-import com.venta.ventapps.Actividades.clientes;
+import com.venta.ventapps.Actividades.clientes.clientes;
 import com.venta.ventapps.Actividades.ventas;
-import com.venta.ventapps.MainActivity;
 import com.venta.ventapps.R;
-import com.venta.ventapps.Splash;
 
 /**
  * A simple {@link Fragment} subclass.

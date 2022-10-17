@@ -1,6 +1,5 @@
-package com.venta.ventapps.Actividades;
+package com.venta.ventapps.Actividades.clientes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -16,9 +15,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.venta.ventapps.Entidades.conexionSQLite;
-import com.venta.ventapps.MainActivity;
 import com.venta.ventapps.R;
-import com.venta.ventapps.Splash;
 import com.venta.ventapps.utilidades.Utilidades;
 
 public class clientes extends AppCompatActivity {

@@ -9,6 +9,7 @@
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/fondodasboard.xml" value="0.185" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_acercade.xml" value="0.185" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_descripcion.xml" value="0.1745" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_editar.xml" value="0.1785" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_estadistica.xml" value="0.185" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_fondologin.xml" value="0.1945" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_home.xml" value="0.185" />
@@ -19,7 +20,8 @@
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/style_spinner.xml" value="0.2025" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_ayuda.xml" value="0.33" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_clientes.xml" value="0.25" />
-        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_listade_cientes.xml" value="0.24074074074074073" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_detalle_cliente.xml" value="0.2" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_listade_cientes.xml" value="0.25" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_productos.xml" value="0.33" />

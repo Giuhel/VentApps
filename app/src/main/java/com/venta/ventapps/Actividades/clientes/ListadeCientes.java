@@ -1,4 +1,4 @@
-package com.venta.ventapps.Actividades;
+package com.venta.ventapps.Actividades.clientes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.venta.ventapps.Actividades.clientes.clientes;
 import com.venta.ventapps.Adapters.AdaptadorClientes;
 import com.venta.ventapps.Entidades.Clientes;
 import com.venta.ventapps.Entidades.conexionSQLite;
@@ -21,7 +22,7 @@ import com.venta.ventapps.utilidades.Utilidades;
 
 import java.util.ArrayList;
 
-public class ListadeCientes extends AppCompatActivity {
+public class ListadeCientes extends AppCompatActivity implements AdaptadorClientes.RecylerItemCLick {
 
     TextInputLayout documentobuscarr;
     MaterialButton btnbuscar;
@@ -29,6 +30,7 @@ public class ListadeCientes extends AppCompatActivity {
 
     ArrayList<Clientes> listaclientes;
     conexionSQLite conn;
+    AdaptadorClientes adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,7 @@ public class ListadeCientes extends AppCompatActivity {
 
         conn=new conexionSQLite(getApplicationContext(),"ventApps",null,1);
 
-
         recyclerlista.setLayoutManager(new LinearLayoutManager(this));
-        recyclerlista.setHasFixedSize(true);
 
         consultarListaCLientes("");
 
@@ -53,6 +53,8 @@ public class ListadeCientes extends AppCompatActivity {
                 consultarListaCLientes(documentobuscarr.getEditText().getText().toString());
             }
         });
+
+
     }
 
     private void consultarListaCLientes(String consulta) {
@@ -71,7 +73,7 @@ public class ListadeCientes extends AppCompatActivity {
             clientes.setCorreo(cursor.getString(5));
             listaclientes.add(clientes);
         }
-        AdaptadorClientes adapter=new AdaptadorClientes(listaclientes);
+        adapter=new AdaptadorClientes(listaclientes,this);
         recyclerlista.setAdapter(adapter);
         db.close();
     }
@@ -84,5 +86,20 @@ public class ListadeCientes extends AppCompatActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void itemClick(Clientes clientes) {
+       System.out.println(clientes.getNombre()+" aquiiiii");
+        Intent miintent=new Intent(ListadeCientes.this,DetalleCliente.class);
+        Bundle mibundle=new Bundle();
+        mibundle.putInt("ID",clientes.getId());
+        mibundle.putString("NOM",clientes.getNombre());
+        mibundle.putString("DOC",clientes.getDocumento());
+        mibundle.putString("CEL",clientes.getTelefono());
+        mibundle.putString("CORREO",clientes.getCorreo());
+        miintent.putExtras(mibundle);
+        startActivity(miintent);
+        finish();
     }
 }

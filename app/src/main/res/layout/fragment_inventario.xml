@@ -121,7 +121,7 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:backgroundTint="@color/Boton2"
+            app:backgroundTint="@color/naranja"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/BtnCreaCatego"
             app:layout_constraintTop_toTopOf="parent" />

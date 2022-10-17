@@ -11,10 +11,10 @@
     <color name="Pastel2">#212F3D</color>
     <color name="gris">#E8EBEC</color>
     <color name="gris2">#d8dada</color>
-    <color name="grisDahboard">#EAEAEA</color>
+    <color name="grisDahboard">#EFEEEE</color>
     <color name="grisletrasmenu">#5C5C5C</color>
-    <color name="Boton2">#ff9800</color>
+    <color name="naranja">#ff9800</color>
     <color name="Verde">#239B56</color>
-    <color name="rojo">#F44336</color>
+    <color name="rojo">#F33D30</color>
     <color name="azul">#164BEF</color>
 </resources>

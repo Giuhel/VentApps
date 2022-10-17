@@ -14,7 +14,10 @@
         android:theme="@style/Theme.VentApps"
         tools:targetApi="31">
         <activity
-            android:name=".Actividades.ListadeCientes"
+            android:name=".Actividades.clientes.DetalleCliente"
+            android:exported="false" />
+        <activity
+            android:name=".Actividades.clientes.ListadeCientes"
             android:exported="false" />
         <activity
             android:name=".Actividades.ventas"
@@ -23,7 +26,7 @@
             android:name=".Actividades.Ayuda"
             android:exported="false" />
         <activity
-            android:name=".Actividades.clientes"
+            android:name=".Actividades.clientes.clientes"
             android:exported="false" />
         <activity
             android:name=".Actividades.productos"
