@@ -49,10 +49,39 @@ public class clientes extends AppCompatActivity {
         TotalClientes();
         IdCliente();
 
+
+        Bundle miBundle=this.getIntent().getExtras();
+        if(miBundle!=null){
+            siguienteId=miBundle.getInt("ID");
+            String nom=miBundle.getString("NOM");
+            String td=miBundle.getString("TIPD");
+            String docu=miBundle.getString("DOC");
+            String tel=miBundle.getString("CEL");
+            String corre=miBundle.getString("CORREO");
+            String acci=miBundle.getString("acc");
+
+            idcliente.setText("ID de CLiente es: "+siguienteId);
+            nombre.getEditText().setText(nom);
+            //tipodocu.setPromptId(2);
+            ndocument.getEditText().setText(docu);
+            telefo.getEditText().setText(tel);
+            correo.getEditText().setText(corre);
+            accion=acci;
+            crearCliente.setText("EDITAR CLIENTE");
+            crearCliente.setCornerRadius(20);
+
+        }else{
+            IdCliente();
+        }
+
         crearCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                REgistraCLientes();
+                if(accion=="guardar"){
+                    REgistraCLientes();
+                }else{
+                    editarcliente();
+                }
             }
         });
     }
@@ -123,6 +152,23 @@ public class clientes extends AppCompatActivity {
         Long idresultante=db.insert(Utilidades.TABLA_CLIENTE,Utilidades.CAMPO_ID,values);
 
         Toast.makeText(getApplicationContext(),"ID Registro: "+idresultante,Toast.LENGTH_SHORT).show();
+        limpiacampos();
+    }
+
+    private void editarcliente() {
+        SQLiteDatabase db=conn.getWritableDatabase();
+        String [] parametros={siguienteId+""};
+
+        ContentValues values=new ContentValues();
+        values.put(Utilidades.CAMPO_NOMBRE,nombre.getEditText().getText().toString());
+        values.put(Utilidades.CAMPO_TIPODOC,tipodocu.getSelectedItem().toString());
+        values.put(Utilidades.CAMPO_NDOC,ndocument.getEditText().getText().toString());
+        values.put(Utilidades.CAMPO_TELEFONO,telefo.getEditText().getText().toString());
+        values.put(Utilidades.CAMPO_CORREO,correo.getEditText().getText().toString());
+
+        db.update(Utilidades.TABLA_CLIENTE,values,Utilidades.CAMPO_ID+"=?",parametros);
+        Toast.makeText(getApplicationContext(),"Se actualizo el cliente",Toast.LENGTH_SHORT).show();
+        db.close();
         limpiacampos();
     }
 

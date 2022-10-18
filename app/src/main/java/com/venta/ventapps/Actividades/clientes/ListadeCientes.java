@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -88,13 +89,16 @@ public class ListadeCientes extends AppCompatActivity implements AdaptadorClient
         }
     }
 
+
+
     @Override
     public void itemClick(Clientes clientes) {
-       System.out.println(clientes.getNombre()+" aquiiiii");
+        System.out.println(clientes.getTipodoc()+" aquiiiii");
         Intent miintent=new Intent(ListadeCientes.this,DetalleCliente.class);
         Bundle mibundle=new Bundle();
         mibundle.putInt("ID",clientes.getId());
         mibundle.putString("NOM",clientes.getNombre());
+        mibundle.putString("TIPD",clientes.getTipodoc());
         mibundle.putString("DOC",clientes.getDocumento());
         mibundle.putString("CEL",clientes.getTelefono());
         mibundle.putString("CORREO",clientes.getCorreo());

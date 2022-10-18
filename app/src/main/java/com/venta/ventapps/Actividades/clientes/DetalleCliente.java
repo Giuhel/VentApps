@@ -23,9 +23,9 @@ import com.venta.ventapps.utilidades.Utilidades;
 
 public class DetalleCliente extends AppCompatActivity {
 
-    TextView id,nombre,documento,telefono,correo;
+    TextView id,nombre,tipodoc,documento,telefono,correo;
     ImageView atras;
-    FloatingActionButton eliminar;
+    FloatingActionButton eliminar,editar;
 
     conexionSQLite conn;
     @Override
@@ -35,11 +35,13 @@ public class DetalleCliente extends AppCompatActivity {
 
         id=findViewById(R.id.listidcliente);
         nombre=findViewById(R.id.listnombrecliente);
-        documento=findViewById(R.id.listdocumentocliente);
+        tipodoc=findViewById(R.id.listTipoDocliente);
+        documento=findViewById(R.id.listdocumentoclientee);
         telefono=findViewById(R.id.listtelefonocliente);
         correo=findViewById(R.id.listcorreocliente);
         atras=findViewById(R.id.atrasdetalleliente);
         eliminar=findViewById(R.id.eliminarcliente);
+        editar=findViewById(R.id.editarcliente);
 
         conn=new conexionSQLite(getApplicationContext(),"ventApps",null,1);
 
@@ -47,12 +49,14 @@ public class DetalleCliente extends AppCompatActivity {
         if(miBundle!=null){
             int ide=miBundle.getInt("ID");
             String nom=miBundle.getString("NOM");
+            String td=miBundle.getString("TIPD");
             String docu=miBundle.getString("DOC");
             String tel=miBundle.getString("CEL");
             String corre=miBundle.getString("CORREO");
 
             id.setText(ide+"");
             nombre.setText(nom);
+            tipodoc.setText(td);
             documento.setText(docu);
             telefono.setText(tel);
             correo.setText(corre);
@@ -62,6 +66,13 @@ public class DetalleCliente extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DialogoEliminar();
+            }
+        });
+
+        editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IrAeditarCliente();
             }
         });
     }
@@ -76,12 +87,19 @@ public class DetalleCliente extends AppCompatActivity {
         }
     }
 
-    private void editarcliente() {
-        SQLiteDatabase db=conn.getWritableDatabase();
-        String [] parametros={id.getText().toString()};
-
-        ContentValues values=new ContentValues();
-        values.put(Utilidades.CAMPO_ID,id.getText().toString());
+    private void IrAeditarCliente() {
+        Intent miintent=new Intent(DetalleCliente.this,clientes.class);
+        Bundle mibundle=new Bundle();
+        mibundle.putInt("ID",Integer.parseInt(id.getText().toString()));
+        mibundle.putString("NOM",nombre.getText().toString());
+        mibundle.putString("TIPD",tipodoc.getText().toString());
+        mibundle.putString("DOC",documento.getText().toString());
+        mibundle.putString("CEL",telefono.getText().toString());
+        mibundle.putString("CORREO",correo.getText().toString());
+        mibundle.putString("acc","editar");
+        miintent.putExtras(mibundle);
+        startActivity(miintent);
+        finish();
     }
 
     private void eliminarCliente() {
