@@ -1,19 +1,14 @@
 package com.venta.ventapps.Adapters;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.venta.ventapps.Entidades.Categorias;
-import com.venta.ventapps.Entidades.Clientes;
 import com.venta.ventapps.R;
-import com.venta.ventapps.dialogos.DialogoCrearCategoriaFragment;
-import com.venta.ventapps.fragmentos.Inventario;
 
 import java.util.ArrayList;
 

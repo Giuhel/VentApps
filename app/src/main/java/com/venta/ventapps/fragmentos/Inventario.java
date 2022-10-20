@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -13,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +21,11 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.venta.ventapps.Actividades.clientes.DetalleCliente;
-import com.venta.ventapps.Actividades.clientes.ListadeCientes;
 import com.venta.ventapps.Actividades.productos;
 import com.venta.ventapps.Adapters.AdaptadorCategorias;
 import com.venta.ventapps.Entidades.Categorias;
 import com.venta.ventapps.Entidades.conexionSQLite;
 import com.venta.ventapps.R;
-import com.venta.ventapps.dialogos.DialogoCrearCategoriaFragment;
 import com.venta.ventapps.utilidades.Utilidades;
 import java.util.ArrayList;
 
@@ -133,8 +127,6 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
             @Override
             public void onClick(View view) {
                 RregistraCategoria("","","");
-                //DialogoCrearCategoriaFragment dialogoCrearCategoriaFragment=new DialogoCrearCategoriaFragment();
-                //dialogoCrearCategoriaFragment.show(getFragmentManager(),"Crear Categoria");
             }
         });
 
