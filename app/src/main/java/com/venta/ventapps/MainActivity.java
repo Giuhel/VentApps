@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.venta.ventapps.Actividades.productos;
 import com.venta.ventapps.Entidades.conexionSQLite;
 import com.venta.ventapps.fragmentos.Inventario;
 import com.venta.ventapps.fragmentos.acerca_de;

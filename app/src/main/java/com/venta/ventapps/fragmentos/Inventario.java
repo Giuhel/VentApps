@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.venta.ventapps.Actividades.productos;
+import com.venta.ventapps.Actividades.productos.productos;
 import com.venta.ventapps.Adapters.AdaptadorCategorias;
 import com.venta.ventapps.Entidades.Categorias;
 import com.venta.ventapps.Entidades.conexionSQLite;
