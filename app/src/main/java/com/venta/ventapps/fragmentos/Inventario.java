@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,16 +17,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.venta.ventapps.Actividades.Ayuda;
+import com.venta.ventapps.Actividades.productos.ListaProductos;
 import com.venta.ventapps.Actividades.productos.productos;
 import com.venta.ventapps.Adapters.AdaptadorCategorias;
 import com.venta.ventapps.Entidades.Categorias;
 import com.venta.ventapps.Entidades.conexionSQLite;
+import com.venta.ventapps.MainActivity;
 import com.venta.ventapps.R;
+import com.venta.ventapps.Splash;
 import com.venta.ventapps.utilidades.Utilidades;
 import java.util.ArrayList;
 
@@ -83,6 +89,8 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
     AdaptadorCategorias adapter;
     RecyclerView recyclerlista;
 
+    LinearLayout atras;
+
     int SiguienteID;
 
     String accion="guardar";
@@ -98,6 +106,7 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
         creaCategoria=vista.findViewById(R.id.BtnCreaCatego);
         cantCateg=vista.findViewById(R.id.txttotalCategorias);
         recyclerlista=vista.findViewById(R.id.Rcvlistcategoria);
+        atras=vista.findViewById(R.id.irListaProdcutos);
 
         conn=new conexionSQLite(getContext(),"ventApps",null,1);
         recyclerlista.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -127,6 +136,14 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
             @Override
             public void onClick(View view) {
                 RregistraCategoria("","","");
+            }
+        });
+
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ListaProductos.class);
+                startActivity(intent);
             }
         });
 
@@ -307,4 +324,5 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
     public void itemClick(Categorias categorias) {
         RregistraCategoria(categorias.getIdcategoria()+"",categorias.getNomCategoria(),"editar");
     }
+
 }

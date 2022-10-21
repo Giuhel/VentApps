@@ -92,6 +92,8 @@ public class productos extends AppCompatActivity {
 
     }
 
+
+//metodos para la carga de imagen
     @Override
     protected void onActivityResult(int requestCode, int resultCode,Intent data) {
         try {
@@ -122,6 +124,19 @@ public class productos extends AppCompatActivity {
         }
 
     }
+
+    public void choseImage(View objectView){
+        try {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent,PICK_IMAGE_REQUEST);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //medotos
 
     private void limpiarcampos() {
         SiguienteID();
@@ -189,21 +204,4 @@ public class productos extends AppCompatActivity {
         }
     }
 
-    private void camara() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(intent.resolveActivity(getPackageManager())!=null){
-            startActivityForResult(intent,1);
-        }
-    }
-
-    public void choseImage(View objectView){
-        try {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent,PICK_IMAGE_REQUEST);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

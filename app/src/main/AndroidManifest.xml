@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.venta.ventapps">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VentApps"
         tools:targetApi="31">
+        <activity
+            android:name=".Actividades.productos.DetalleProducto"
+            android:exported="false" />
+        <activity
+            android:name=".Actividades.productos.ListaProductos"
+            android:exported="false" />
         <activity
             android:name=".Actividades.clientes.DetalleCliente"
             android:exported="false" />

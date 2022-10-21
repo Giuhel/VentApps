@@ -2,9 +2,11 @@ package com.venta.ventapps.Entidades;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class conexionSQLite extends SQLiteOpenHelper {
 
@@ -42,6 +45,7 @@ public class conexionSQLite extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //guardar imagen
     public void StorageImage (Productos productos){
         try {
             SQLiteDatabase bd=this.getWritableDatabase();
@@ -69,6 +73,33 @@ public class conexionSQLite extends SQLiteOpenHelper {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    //cargar imagen
+    public ArrayList<Productos> CargarProductoLista(String consulta){
+        try {
+            SQLiteDatabase db=this.getReadableDatabase();
+            ArrayList<Productos> listproducto=new ArrayList<>();
+
+            Cursor cursor=db.rawQuery("Select * from "+Utilidades.TABLA_PRODUCTOS+" where nombre like '%"+consulta+"%'",null);
+            while (cursor.moveToNext()){
+                Integer id=cursor.getInt(0);
+                String nombre=cursor.getString(1);
+                Integer cant=cursor.getInt(2);
+                byte [] imgbytes=cursor.getBlob(3);
+                Bitmap objectbitmap= BitmapFactory.decodeByteArray(imgbytes,0,imgbytes.length);
+                String codigo=cursor.getString(4);
+                double precio=cursor.getDouble(5);
+                String cate=cursor.getString(6);
+                String descrip=cursor.getString(7);
+                listproducto.add(new Productos(id,nombre,objectbitmap,cant,codigo,precio,cate,descrip));
+            }
+            return listproducto;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context,"error de conexion",Toast.LENGTH_SHORT).show();
+            return null;
         }
     }
 }
