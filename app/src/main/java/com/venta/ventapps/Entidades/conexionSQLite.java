@@ -35,6 +35,7 @@ public class conexionSQLite extends SQLiteOpenHelper {
         db.execSQL(Utilidades.crear_tabla_usuario);
         db.execSQL(Utilidades.crear_tabla_categoria);
         db.execSQL(Utilidades.crear_tabla_prodcutos);
+        db.execSQL(Utilidades.crear_tabla_venta);
     }
 
     @Override
@@ -42,6 +43,7 @@ public class conexionSQLite extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS bd_clientes");
         db.execSQL("DROP TABLE IF EXISTS bd_categorias");
         db.execSQL("DROP TABLE IF EXISTS bd_productos");
+        db.execSQL("DROP TABLE IF EXISTS bd_ventas");
         onCreate(db);
     }
 

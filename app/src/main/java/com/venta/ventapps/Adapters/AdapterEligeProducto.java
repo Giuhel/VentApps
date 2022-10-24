@@ -1,10 +1,9 @@
 package com.venta.ventapps.Adapters;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,30 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.venta.ventapps.Actividades.clientes.DetalleCliente;
-import com.venta.ventapps.Actividades.clientes.ListadeCientes;
-import com.venta.ventapps.Actividades.clientes.clientes;
-import com.venta.ventapps.Actividades.productos.DetalleProducto;
-import com.venta.ventapps.Entidades.Clientes;
 import com.venta.ventapps.Entidades.Productos;
 import com.venta.ventapps.R;
 
 import java.util.ArrayList;
 
-public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.AdartadorViewHolder> {
+public class AdapterEligeProducto extends RecyclerView.Adapter<AdapterEligeProducto.AdartadorViewHolder>{
 
     ArrayList<Productos> listproductos;
-    private RecylerItemCLick itemCLick;
+    RecylerItemCLick itemCLick;
 
-    public AdaptadorProductos(ArrayList<Productos> listproductos, RecylerItemCLick itemCLick) {
+    public AdapterEligeProducto(ArrayList<Productos> listproductos, RecylerItemCLick itemCLick) {
         this.listproductos = listproductos;
         this.itemCLick=itemCLick;
     }
 
-    @NonNull
     @Override
-    public AdartadorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View vista= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_productos,null,false);
+    public AdartadorViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+        View vista= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_elegirproductos,null,false);
         return new AdartadorViewHolder(vista);
     }
 
@@ -61,20 +54,21 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
         return listproductos.size();
     }
 
+
     public static class AdartadorViewHolder extends RecyclerView.ViewHolder{
 
         ImageView img;
         TextView id,nombre,stock;
         CardView cardView;
 
-        public AdartadorViewHolder(@NonNull View itemView) {
+        public AdartadorViewHolder(View itemView) {
             super(itemView);
 
-            img=itemView.findViewById(R.id.listImgproducto);
-            id=itemView.findViewById(R.id.listIdProducto);
-            nombre=itemView.findViewById(R.id.listNomProducto);
-            stock=itemView.findViewById(R.id.listStockProducto);
-            cardView=itemView.findViewById(R.id.idCardproductolist);
+            img=itemView.findViewById(R.id.eligeimgproducto);
+            id=itemView.findViewById(R.id.eligeIdprod);
+            nombre=itemView.findViewById(R.id.eligenomProd);
+            stock=itemView.findViewById(R.id.eligeStokProd);
+            cardView=itemView.findViewById(R.id.idCardEligeProd);
         }
     }
 

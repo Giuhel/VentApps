@@ -2,12 +2,21 @@ package com.venta.ventapps.Actividades;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.venta.ventapps.Adapters.AdaptadorProductos;
+import com.venta.ventapps.Adapters.AdapterEligeProducto;
+import com.venta.ventapps.Entidades.Productos;
+import com.venta.ventapps.Entidades.conexionSQLite;
 import com.venta.ventapps.R;
+import com.venta.ventapps.utilidades.Utilidades;
 
 import android.app.DatePickerDialog;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,19 +26,23 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class ventas extends AppCompatActivity {
+public class ventas extends AppCompatActivity implements AdapterEligeProducto.RecylerItemCLick{
 
     LinearLayout inputF;
-    TextView fec;
+    TextView fec,numeroventa;
     private int dia, mes, anio;
     CardView seleccionarProd;
 
     Spinner spnMetpago;
+    conexionSQLite conn;
+
+    int siguienteNumVenta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +53,12 @@ public class ventas extends AppCompatActivity {
         fec = findViewById(R.id.txtfecha);
         spnMetpago = findViewById(R.id.MetodoPago);
         seleccionarProd = findViewById(R.id.seleccprod);
+        numeroventa = findViewById(R.id.numventa);
+
+        conn=new conexionSQLite(getApplicationContext(),"ventApps",null,1);
 
         ObtenerFecha();
+        NumeroVenta();
         llenarSpiner();
 
     }
@@ -60,6 +77,30 @@ public class ventas extends AppCompatActivity {
         }
     }
 
+    private void NumeroVenta(){
+        SQLiteDatabase db=conn.getReadableDatabase();
+        try {
+            Cursor cursor =db.rawQuery("select max("+ Utilidades.NUMERO_VENTA+") from "+Utilidades.TABLA_VENTA,null);
+            cursor.moveToFirst();
+            siguienteNumVenta=cursor.getInt(0);
+            if(siguienteNumVenta==0){
+                siguienteNumVenta=1;
+                numeroventa.setText("00"+siguienteNumVenta);
+            }else{
+                if(siguienteNumVenta<=9){
+                    numeroventa.setText("00"+siguienteNumVenta);
+                }else if(siguienteNumVenta>9 && siguienteNumVenta<=99){
+                    numeroventa.setText("0"+siguienteNumVenta);
+                }else{
+                    numeroventa.setText(siguienteNumVenta+"");
+                }
+            }
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void abrirDialogoElegirProdcuto() {
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         LayoutInflater inflater=getLayoutInflater();
@@ -70,11 +111,23 @@ public class ventas extends AppCompatActivity {
         dialog.show();
 
         ImageButton cerrar=v.findViewById(R.id.btnClose);
+        RecyclerView listaproductos=v.findViewById(R.id.listElegirProd);
+        MaterialButton buscar=v.findViewById(R.id.btnbuscaa);
+        TextInputLayout buscado=v.findViewById(R.id.txtnomprodu);
+
+        cargarRecyclerProductos("",listaproductos);
 
         cerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
+            }
+        });
+
+        buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cargarRecyclerProductos(buscado.getEditText().getText().toString(),listaproductos);
             }
         });
 
@@ -135,5 +188,21 @@ public class ventas extends AppCompatActivity {
         String[] Metodos = {"Efectivo", "Tarjeta", "YAPE", "Transferencia Bancaria", "otros"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_activated_1, Metodos);
         spnMetpago.setAdapter(adapter);
+    }
+
+    public void cargarRecyclerProductos(String consulta,RecyclerView lista){
+        try {
+            AdapterEligeProducto adapter = new AdapterEligeProducto(conn.CargarProductoLista(consulta),this);
+            lista.setHasFixedSize(true);
+            lista.setLayoutManager(new LinearLayoutManager(this));
+            lista.setAdapter(adapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void itemClick(Productos productos) {
+        Toast.makeText(getApplicationContext(),productos.getNombre(),Toast.LENGTH_SHORT).show();
     }
 }
