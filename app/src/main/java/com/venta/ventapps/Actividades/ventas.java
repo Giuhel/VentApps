@@ -1,14 +1,19 @@
 package com.venta.ventapps.Actividades;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.venta.ventapps.R;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,6 +27,7 @@ public class ventas extends AppCompatActivity {
     LinearLayout inputF;
     TextView fec;
     private int dia, mes, anio;
+    CardView seleccionarProd;
 
     Spinner spnMetpago;
 
@@ -33,6 +39,7 @@ public class ventas extends AppCompatActivity {
         inputF = findViewById(R.id.inputfecha);
         fec = findViewById(R.id.txtfecha);
         spnMetpago = findViewById(R.id.MetodoPago);
+        seleccionarProd = findViewById(R.id.seleccprod);
 
         ObtenerFecha();
         llenarSpiner();
@@ -44,10 +51,33 @@ public class ventas extends AppCompatActivity {
             case R.id.inputfecha:
                 seleccionarFecha();
                 break;
+            case R.id.seleccprod:
+                abrirDialogoElegirProdcuto();
+                break;
             case R.id.btnAtrasV:
                 finish();
                 break;
         }
+    }
+
+    private void abrirDialogoElegirProdcuto() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        LayoutInflater inflater=getLayoutInflater();
+        View v=inflater.inflate(R.layout.dialogo_seleccionproducto,null);
+        builder.setView(v);
+
+        final AlertDialog dialog=builder.create();
+        dialog.show();
+
+        ImageButton cerrar=v.findViewById(R.id.btnClose);
+
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
     }
 
     private void seleccionarFecha() {
