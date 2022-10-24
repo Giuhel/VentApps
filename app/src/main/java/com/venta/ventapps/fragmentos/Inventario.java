@@ -83,7 +83,8 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
 
     MaterialButton crearProd,creaCategoria;
     public conexionSQLite conn;
-    public  static TextView cantCateg;
+    TextView cantCateg;
+    public static TextView cantProducT;
 
     ArrayList<Categorias> listacategorias;
     AdaptadorCategorias adapter;
@@ -105,6 +106,7 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
         crearProd=vista.findViewById(R.id.BtnCreaProdu);
         creaCategoria=vista.findViewById(R.id.BtnCreaCatego);
         cantCateg=vista.findViewById(R.id.txttotalCategorias);
+        cantProducT=vista.findViewById(R.id.cantiProductos);
         recyclerlista=vista.findViewById(R.id.Rcvlistcategoria);
         atras=vista.findViewById(R.id.irListaProdcutos);
 
@@ -114,6 +116,7 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
         consultarListaCategorias();
 
         TotalCategorias();
+        TotalProdutos();
 
         crearProd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,6 +313,20 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
             total=cursor.getInt(0);
             cantCateg.setText(total+"");
             cantCate=total;
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void TotalProdutos(){
+        SQLiteDatabase db=conn.getReadableDatabase();
+        int total;
+        try {
+            Cursor cursor =db.rawQuery("select count(*) from "+ Utilidades.TABLA_PRODUCTOS,null);
+            cursor.moveToFirst();
+            total=cursor.getInt(0);
+            cantProducT.setText(total+"");
             cursor.close();
         } catch (Exception e) {
             e.printStackTrace();

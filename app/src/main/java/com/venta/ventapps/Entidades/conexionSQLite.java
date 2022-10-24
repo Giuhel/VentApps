@@ -46,7 +46,7 @@ public class conexionSQLite extends SQLiteOpenHelper {
     }
 
     //guardar imagen
-    public void StorageImage (Productos productos){
+    public void GuardarPRoductos (Productos productos){
         try {
             SQLiteDatabase bd=this.getWritableDatabase();
             Bitmap image=productos.getImg();
@@ -72,6 +72,35 @@ public class conexionSQLite extends SQLiteOpenHelper {
                 Toast.makeText(context,"No se registro el Producto",Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void EditarPRoductos (Productos productos,int id){
+        try {
+            SQLiteDatabase bd=this.getWritableDatabase();
+            Bitmap image=productos.getImg();
+            String [] parametros={id+""};
+
+            byteArrayOutputStream=new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+            imagesInByte=byteArrayOutputStream.toByteArray();
+
+            ContentValues contentValues=new ContentValues();
+            contentValues.put(Utilidades.ID_PRODUCTO,productos.getId());
+            contentValues.put(Utilidades.NOMBRE_PRODUCTO,productos.getNombre());
+            contentValues.put(Utilidades.CANTIDAD_PRODUCTO,productos.getCantidad());
+            contentValues.put(Utilidades.IMG_PRODUCTO,imagesInByte);
+            contentValues.put(Utilidades.CODIGO_PRODUCTO,productos.getCodigo());
+            contentValues.put(Utilidades.PRECIOV_PRODUCTO,productos.getPreciov());
+            contentValues.put(Utilidades.CATEGORIA_PRODUCTO,productos.getCategoria());
+            contentValues.put(Utilidades.DESCRIPCION_PRODUCTO,productos.getDescripcion());
+
+            bd.update(Utilidades.TABLA_PRODUCTOS,contentValues,Utilidades.ID_PRODUCTO+"=?",parametros);
+            Toast.makeText(context,"Se Edito el Producto",Toast.LENGTH_SHORT).show();
+            bd.close();
+        } catch (Exception e) {
+            Toast.makeText(context,"No se Edito el Producto",Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

@@ -169,7 +169,8 @@ public class clientes extends AppCompatActivity {
         db.update(Utilidades.TABLA_CLIENTE,values,Utilidades.CAMPO_ID+"=?",parametros);
         Toast.makeText(getApplicationContext(),"Se actualizo el cliente",Toast.LENGTH_SHORT).show();
         db.close();
-        limpiacampos();
+        //limpiacampos();
+        finish();
     }
 
     private void limpiacampos(){

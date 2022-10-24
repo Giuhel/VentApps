@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,14 +32,12 @@ import com.venta.ventapps.Entidades.Categorias;
 import com.venta.ventapps.Entidades.Productos;
 import com.venta.ventapps.Entidades.conexionSQLite;
 import com.venta.ventapps.R;
+import com.venta.ventapps.fragmentos.Inventario;
 import com.venta.ventapps.utilidades.Utilidades;
 
 import java.util.ArrayList;
 
 public class productos extends AppCompatActivity {
-
-
-
     ImageView img;
     TextView idprod;
     TextInputLayout nombre,cantidad,codigo,precioV,descripcion;
@@ -50,12 +49,13 @@ public class productos extends AppCompatActivity {
 
     conexionSQLite conn;
     int siguienteID;
-
+    String accion="guardar";
+    boolean seleccionoImagen=false;
 
     private static final int PICK_IMAGE_REQUEST=100;
     private Uri imageFilePath;
     private Bitmap imageTostore;
-
+    Bitmap objectbitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,17 +83,48 @@ public class productos extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_activated_1,CategoriasLista);
         categoria.setAdapter(adapter);
 
+        Bundle miBundle=this.getIntent().getExtras();
+        if(miBundle!=null){
+            siguienteID=miBundle.getInt("ID");
+            String nom=miBundle.getString("NOM");
+            int stok=miBundle.getInt("STK");
+            String codi=miBundle.getString("COD");
+            double pre=miBundle.getDouble("PREV");
+            String cat=miBundle.getString("CATE");
+            String des=miBundle.getString("DESC");
+            byte [] imgg=miBundle.getByteArray("IMG");
+            objectbitmap= BitmapFactory.decodeByteArray(imgg,0,imgg.length);
+            String acci=miBundle.getString("acc");
+
+            idprod.setText("ID de producto: "+siguienteID);
+            nombre.getEditText().setText(nom);
+            cantidad.getEditText().setText(stok+"");
+            img.setImageBitmap(objectbitmap);
+            codigo.getEditText().setText(codi+"");
+            precioV.getEditText().setText(pre+"");
+            descripcion.getEditText().setText(des);
+            accion=acci;
+            Agregar.setText("EDITAR PRODUCTO");
+            Agregar.setCornerRadius(20);
+        }else {
+            SiguienteID();
+            accion="guardar";
+        }
+
         Agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                storeImage();
+                if(accion=="guardar"){
+                    GuardarPRoducto();
+                }else {
+                    EditarProductos();
+                }
             }
         });
 
     }
 
-
-//metodos para la carga de imagen
+    //metodos para la carga de imagen
     @Override
     protected void onActivityResult(int requestCode, int resultCode,Intent data) {
         try {
@@ -102,27 +133,73 @@ public class productos extends AppCompatActivity {
                 imageFilePath=data.getData();
                 imageTostore=MediaStore.Images.Media.getBitmap(getContentResolver(),imageFilePath);
                 img.setImageBitmap(imageTostore);
+                objectbitmap=imageTostore;
+                seleccionoImagen=true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void storeImage(){
+    public void GuardarPRoducto(){
         try {
-            if(!cantidad.getEditText().getText().toString().isEmpty() && img.getDrawable()!=null){
-                conn.StorageImage(new Productos(siguienteID,nombre.getEditText().getText().toString(),imageTostore,Integer.parseInt(cantidad.getEditText().getText().toString()),
-                        codigo.getEditText().getText().toString(),Double.parseDouble(precioV.getEditText().getText().toString()),categoria.getSelectedItem().toString(),
-                        descripcion.getEditText().getText().toString()));
-                limpiarcampos();
-
+            if(seleccionoImagen==true){
+                if(cantidad.getEditText().getText().toString().isEmpty() || nombre.getEditText().getText().toString().isEmpty()
+                || codigo.getEditText().getText().toString().isEmpty() || precioV.getEditText().getText().toString().isEmpty()){
+                    Toast.makeText(this,"LLene los campos",Toast.LENGTH_SHORT).show();
+                }else{
+                    if(categoria.getSelectedItem().equals("Seleccione")){
+                        Toast.makeText(this,"Seleccione una categoria",Toast.LENGTH_SHORT).show();
+                    }else{
+                        conn.GuardarPRoductos(new Productos(siguienteID,nombre.getEditText().getText().toString(),imageTostore,Integer.parseInt(cantidad.getEditText().getText().toString()),
+                                codigo.getEditText().getText().toString(),Double.parseDouble(precioV.getEditText().getText().toString()),categoria.getSelectedItem().toString(),
+                                descripcion.getEditText().getText().toString()));
+                        limpiarcampos();
+                        TotalProducto();
+                    }
+                }
             }else{
                 Toast.makeText(this,"Selecciona una imagen",Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    private void TotalProducto() {
+        SQLiteDatabase db=conn.getReadableDatabase();
+        int total;
+        try {
+            Cursor cursor =db.rawQuery("select count(*) from "+ Utilidades.TABLA_PRODUCTOS,null);
+            cursor.moveToFirst();
+            total=cursor.getInt(0);
+            Inventario.cantProducT.setText(total+"");
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void EditarProductos() {
+        try {
+            if(cantidad.getEditText().getText().toString().isEmpty() || nombre.getEditText().getText().toString().isEmpty()
+                    || codigo.getEditText().getText().toString().isEmpty() || precioV.getEditText().getText().toString().isEmpty()){
+                Toast.makeText(this,"LLene los campos",Toast.LENGTH_SHORT).show();
+            }else{
+                if(categoria.getSelectedItem().equals("Seleccione")){
+                    Toast.makeText(this,"Seleccione una categoria",Toast.LENGTH_SHORT).show();
+                }else{
+                    conn.EditarPRoductos(new Productos(siguienteID,nombre.getEditText().getText().toString(),objectbitmap,Integer.parseInt(cantidad.getEditText().getText().toString()),
+                            codigo.getEditText().getText().toString(),Double.parseDouble(precioV.getEditText().getText().toString()),categoria.getSelectedItem().toString(),
+                            descripcion.getEditText().getText().toString()),siguienteID);
+                    //limpiarcampos();
+                    finish();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void choseImage(View objectView){
@@ -141,7 +218,7 @@ public class productos extends AppCompatActivity {
     private void limpiarcampos() {
         SiguienteID();
        nombre.getEditText().setText("");
-       img.setImageResource(R.drawable.facebook);
+       img.setImageResource(R.drawable.camara);
        cantidad.getEditText().setText("");
        codigo.getEditText().setText("");
        precioV.getEditText().setText("");

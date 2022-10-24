@@ -73,5 +73,6 @@ public class ListaProductos extends AppCompatActivity implements AdaptadorProduc
         mibundle.putInt("ID",productos.getId());
         miintent.putExtras(mibundle);
         startActivity(miintent);
+        finish();
     }
 }
