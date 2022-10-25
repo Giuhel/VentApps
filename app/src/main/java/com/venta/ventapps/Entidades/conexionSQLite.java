@@ -55,7 +55,7 @@ public class conexionSQLite extends SQLiteOpenHelper {
             SQLiteDatabase bd=this.getWritableDatabase();
             Bitmap image=productos.getImg();
             byteArrayOutputStream=new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.PNG,50,byteArrayOutputStream);
+            image.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
             imagesInByte=byteArrayOutputStream.toByteArray();
 
             ContentValues contentValues=new ContentValues();
@@ -87,7 +87,7 @@ public class conexionSQLite extends SQLiteOpenHelper {
             String [] parametros={id+""};
 
             byteArrayOutputStream=new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.PNG,50,byteArrayOutputStream);
+            image.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
             imagesInByte=byteArrayOutputStream.toByteArray();
             ContentValues contentValues=new ContentValues();
             contentValues.put(Utilidades.ID_PRODUCTO,productos.getId());
