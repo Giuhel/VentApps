@@ -36,6 +36,7 @@ public class conexionSQLite extends SQLiteOpenHelper {
         db.execSQL(Utilidades.crear_tabla_categoria);
         db.execSQL(Utilidades.crear_tabla_prodcutos);
         db.execSQL(Utilidades.crear_tabla_venta);
+        db.execSQL(Utilidades.crear_tabla_detalleventa);
     }
 
     @Override
@@ -44,6 +45,7 @@ public class conexionSQLite extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS bd_categorias");
         db.execSQL("DROP TABLE IF EXISTS bd_productos");
         db.execSQL("DROP TABLE IF EXISTS bd_ventas");
+        db.execSQL("DROP TABLE IF EXISTS bd_detaVenta");
         onCreate(db);
     }
 
@@ -53,7 +55,7 @@ public class conexionSQLite extends SQLiteOpenHelper {
             SQLiteDatabase bd=this.getWritableDatabase();
             Bitmap image=productos.getImg();
             byteArrayOutputStream=new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+            image.compress(Bitmap.CompressFormat.PNG,50,byteArrayOutputStream);
             imagesInByte=byteArrayOutputStream.toByteArray();
 
             ContentValues contentValues=new ContentValues();
@@ -85,9 +87,8 @@ public class conexionSQLite extends SQLiteOpenHelper {
             String [] parametros={id+""};
 
             byteArrayOutputStream=new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+            image.compress(Bitmap.CompressFormat.PNG,50,byteArrayOutputStream);
             imagesInByte=byteArrayOutputStream.toByteArray();
-
             ContentValues contentValues=new ContentValues();
             contentValues.put(Utilidades.ID_PRODUCTO,productos.getId());
             contentValues.put(Utilidades.NOMBRE_PRODUCTO,productos.getNombre());

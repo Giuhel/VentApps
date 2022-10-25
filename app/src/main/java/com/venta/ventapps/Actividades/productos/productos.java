@@ -15,10 +15,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -143,23 +145,23 @@ public class productos extends AppCompatActivity {
 
     public void GuardarPRoducto(){
         try {
-            if(seleccionoImagen==true){
-                if(cantidad.getEditText().getText().toString().isEmpty() || nombre.getEditText().getText().toString().isEmpty()
-                || codigo.getEditText().getText().toString().isEmpty() || precioV.getEditText().getText().toString().isEmpty()){
-                    Toast.makeText(this,"LLene los campos",Toast.LENGTH_SHORT).show();
-                }else{
-                    if(categoria.getSelectedItem().equals("Seleccione")){
-                        Toast.makeText(this,"Seleccione una categoria",Toast.LENGTH_SHORT).show();
-                    }else{
-                        conn.GuardarPRoductos(new Productos(siguienteID,nombre.getEditText().getText().toString(),imageTostore,Integer.parseInt(cantidad.getEditText().getText().toString()),
-                                codigo.getEditText().getText().toString(),Double.parseDouble(precioV.getEditText().getText().toString()),categoria.getSelectedItem().toString(),
-                                descripcion.getEditText().getText().toString()));
-                        limpiarcampos();
-                        TotalProducto();
-                    }
-                }
+            if(cantidad.getEditText().getText().toString().isEmpty() || nombre.getEditText().getText().toString().isEmpty()
+                    || codigo.getEditText().getText().toString().isEmpty() || precioV.getEditText().getText().toString().isEmpty()){
+                Toast.makeText(this,"LLene los campos",Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(this,"Selecciona una imagen",Toast.LENGTH_SHORT).show();
+                if(categoria.getSelectedItem().equals("Seleccione")){
+                    Toast.makeText(this,"Seleccione una categoria",Toast.LENGTH_SHORT).show();
+                }else{
+                    if(seleccionoImagen==false){
+                        Bitmap bitmap=BitmapFactory.decodeResource(getResources(),R.drawable.sinimg);
+                        objectbitmap=bitmap;
+                    }
+                    conn.GuardarPRoductos(new Productos(siguienteID,nombre.getEditText().getText().toString(),objectbitmap,Integer.parseInt(cantidad.getEditText().getText().toString()),
+                            codigo.getEditText().getText().toString(),Double.parseDouble(precioV.getEditText().getText().toString()),categoria.getSelectedItem().toString(),
+                            descripcion.getEditText().getText().toString()));
+                    limpiarcampos();
+                    TotalProducto();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

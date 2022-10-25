@@ -3,18 +3,12 @@ package com.venta.ventapps.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.venta.ventapps.Entidades.Productos;
 import com.venta.ventapps.R;
-
 import java.util.ArrayList;
 
 public class AdapterEligeProducto extends RecyclerView.Adapter<AdapterEligeProducto.AdartadorViewHolder>{
@@ -39,6 +33,7 @@ public class AdapterEligeProducto extends RecyclerView.Adapter<AdapterEligeProdu
         holder.id.setText(listproductos.get(i).getId()+"");
         holder.nombre.setText(listproductos.get(i).getNombre());
         holder.stock.setText(listproductos.get(i).getCantidad()+"");
+        holder.preciov.setText(listproductos.get(i).getPreciov()+"");
         holder.img.setImageBitmap(listproductos.get(i).getImg());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -58,8 +53,7 @@ public class AdapterEligeProducto extends RecyclerView.Adapter<AdapterEligeProdu
     public static class AdartadorViewHolder extends RecyclerView.ViewHolder{
 
         ImageView img;
-        TextView id,nombre,stock;
-        CardView cardView;
+        TextView id,nombre,stock,preciov;
 
         public AdartadorViewHolder(View itemView) {
             super(itemView);
@@ -68,7 +62,7 @@ public class AdapterEligeProducto extends RecyclerView.Adapter<AdapterEligeProdu
             id=itemView.findViewById(R.id.eligeIdprod);
             nombre=itemView.findViewById(R.id.eligenomProd);
             stock=itemView.findViewById(R.id.eligeStokProd);
-            cardView=itemView.findViewById(R.id.idCardEligeProd);
+            preciov=itemView.findViewById(R.id.eligePrecioProd);
         }
     }
 
