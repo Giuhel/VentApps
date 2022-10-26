@@ -434,4 +434,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         }
     }
 
+    private void GuardarVenta(){
+
+    }
 }
