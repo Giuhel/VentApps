@@ -238,13 +238,12 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         }
     }
 
-    private void cargarRecyclerProdAgregados(RecyclerView lista,String nventa){
+    private void cargarRecyclerProdAgregados(RecyclerView lista,String nvent){
         SQLiteDatabase db=conn.getReadableDatabase();
         detalleVenta detalle=null;
         ArrayList<detalleVenta> listaDetalle = new ArrayList<>();
 
-        Cursor cursor =db.rawQuery("select * from "+ Utilidades.TABLA_DETAVENTA + " WHERE "+
-                Utilidades.DETALLEV_NUMEROV+"="+nventa,null);
+        Cursor cursor =db.rawQuery("select * from "+Utilidades.TABLA_DETAVENTA+ " WHERE "+Utilidades.DETALLEV_NUMEROV+"='"+nvent+"'",null);
         while (cursor.moveToNext()){
             detalle=new detalleVenta();
             detalle.setId(cursor.getInt(0));
@@ -420,13 +419,15 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         SQLiteDatabase db=conn.getReadableDatabase();
         try {
             Cursor cursor =db.rawQuery("select sum("+Utilidades.DETALLEV_CANTIDAD+"*"+Utilidades.DETALLEV_PRECIOPROD+") " +
-                    "from "+Utilidades.TABLA_DETAVENTA+" where "+Utilidades.DETALLEV_NUMEROV+"="+nuventaa,null);
+                    "from "+Utilidades.TABLA_DETAVENTA+" where "+Utilidades.DETALLEV_NUMEROV+"='"+nuventaa+"'",null);
             cursor.moveToFirst();
             montoTotal=cursor.getDouble(0);
             if(montoTotal==0){
                 monto.getEditText().setText("");
+                Toast.makeText(getApplicationContext(), montoTotal+"", Toast.LENGTH_SHORT).show();
             }else{
                 monto.getEditText().setText(montoTotal+"");
+                Toast.makeText(getApplicationContext(), montoTotal+"", Toast.LENGTH_SHORT).show();
             }
             cursor.close();
         } catch (Exception e) {
