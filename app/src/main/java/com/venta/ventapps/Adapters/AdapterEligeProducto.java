@@ -39,7 +39,7 @@ public class AdapterEligeProducto extends RecyclerView.Adapter<AdapterEligeProdu
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemCLick.itemClick(item);
+                itemCLick.itemClickEligeProd(item);
             }
         });
     }
@@ -67,6 +67,6 @@ public class AdapterEligeProducto extends RecyclerView.Adapter<AdapterEligeProdu
     }
 
     public interface RecylerItemCLick{
-        void itemClick(Productos productos);
+        void itemClickEligeProd(Productos productos);
     }
 }

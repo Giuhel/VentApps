@@ -6,13 +6,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.venta.ventapps.Actividades.clientes.DetalleCliente;
+import com.venta.ventapps.Actividades.clientes.ListadeCientes;
+import com.venta.ventapps.Adapters.AdaptadorClientes;
 import com.venta.ventapps.Adapters.AdapterEligeProducto;
+import com.venta.ventapps.Adapters.AdapterProdAgregados;
+import com.venta.ventapps.Entidades.Clientes;
 import com.venta.ventapps.Entidades.Productos;
 import com.venta.ventapps.Entidades.conexionSQLite;
+import com.venta.ventapps.Entidades.detalleVenta;
 import com.venta.ventapps.R;
 import com.venta.ventapps.utilidades.Utilidades;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -27,9 +34,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ventas extends AppCompatActivity implements AdapterEligeProducto.RecylerItemCLick{
+public class ventas extends AppCompatActivity implements AdapterEligeProducto.RecylerItemCLick,
+                            AdapterProdAgregados.RecylerItemCLick{
 
     LinearLayout inputF;
     TextView fec,numeroventa;
@@ -37,14 +46,22 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
     CardView seleccionarProd;
 
     TextInputLayout nomproducto,cantiproducto,monto;
+    MaterialButton agregaProd;
 
     Spinner spnMetpago;
     conexionSQLite conn;
 
+
+    RecyclerView recyclerProdAgregados;
+
     int siguienteNumVenta,siguienteNDetalle;
 
     AlertDialog dialog = null;
-
+    int idproducto;
+    double precioprod;
+    public static String accion;
+    double subtotal;
+    double montoTotal; //para obtener monto total cuando se elimine un producto de la lista en venta
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +76,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         nomproducto = findViewById(R.id.ventaNombreProducto);
         cantiproducto = findViewById(R.id.ventaCantProd);
         monto = findViewById(R.id.ventaMontoPagar);
+        agregaProd = findViewById(R.id.botonAgregaProducto);
 
         conn=new conexionSQLite(getApplicationContext(),"ventApps",null,1);
 
@@ -66,6 +84,8 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         NumeroVenta();
         IdDetalle();
         llenarSpiner();
+        ObtenerMontoTotal(numeroventa.getText().toString());
+        botones();
     }
 
     public void onClick(View view) {
@@ -76,10 +96,22 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
             case R.id.seleccprod:
                 abrirDialogoElegirProdcuto();
                 break;
+            case R.id.irProdAgregados:
+                AbrirDialogoProdcutosAgregados();
+                break;
             case R.id.btnAtrasV:
                 finish();
                 break;
         }
+    }
+
+    private void botones(){
+        agregaProd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GuardarDEtalleVenta(idproducto,precioprod);
+            }
+        });
     }
 
     private void NumeroVenta(){
@@ -206,6 +238,29 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         }
     }
 
+    private void cargarRecyclerProdAgregados(RecyclerView lista,String nventa){
+        SQLiteDatabase db=conn.getReadableDatabase();
+        detalleVenta detalle=null;
+        ArrayList<detalleVenta> listaDetalle = new ArrayList<>();
+
+        Cursor cursor =db.rawQuery("select * from "+ Utilidades.TABLA_DETAVENTA + " WHERE "+
+                Utilidades.DETALLEV_NUMEROV+"="+nventa,null);
+        while (cursor.moveToNext()){
+            detalle=new detalleVenta();
+            detalle.setId(cursor.getInt(0));
+            detalle.setNumeroventa(cursor.getString(1));
+            detalle.setIdProd(cursor.getInt(2));
+            detalle.setNomProd(cursor.getString(3));
+            detalle.setCant(cursor.getInt(4));
+            detalle.setPrecio(cursor.getDouble(5));
+            listaDetalle.add(detalle);
+        }
+        AdapterProdAgregados adapter=new AdapterProdAgregados(listaDetalle,this);
+        lista.setLayoutManager(new LinearLayoutManager(this));
+        lista.setAdapter(adapter);
+        db.close();
+    }
+
     private void dialogo_Ingresar_Cantidad(String nomprod,double precv,int idprod){
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         LayoutInflater inflater=getLayoutInflater();
@@ -228,6 +283,8 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         agrega.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                idproducto=idprod;
+                precioprod=precv;
                 enviaProducto(nomprod,Integer.parseInt(cant.getText().toString()),precv);
                 dialogo.dismiss();
                 dialog.dismiss();
@@ -238,17 +295,55 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
     private void enviaProducto(String pro,int cant,double prev){
         nomproducto.getEditText().setText(pro);
         cantiproducto.getEditText().setText(cant+"");
-        double subtotal;
-        subtotal=cant*prev;
+        subtotal=subtotal+(cant*prev);
         monto.getEditText().setText(subtotal+"");
     }
 
+    private void AbrirDialogoProdcutosAgregados(){
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        LayoutInflater inflater=getLayoutInflater();
+        View v=inflater.inflate(R.layout.dialogo_productos_agregados_v,null);
+        builder.setView(v);
+
+        final AlertDialog dialogoAP=builder.create();
+        dialogoAP.show();
+
+        ImageButton cerrar=v.findViewById(R.id.btnCloseProdAgregados);
+        recyclerProdAgregados=v.findViewById(R.id.listProductosAgregados);
+
+        cargarRecyclerProdAgregados(recyclerProdAgregados,numeroventa.getText().toString());
+
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogoAP.dismiss();
+            }
+        });
+
+    }
+
     @Override
-    public void itemClick(Productos productos) {
+    public void itemClickEligeProd(Productos productos) {
         Toast.makeText(getApplicationContext(),productos.getId()+"",Toast.LENGTH_SHORT).show();
         dialogo_Ingresar_Cantidad(productos.getNombre(),productos.getPreciov(),productos.getId());
     }
 
+    @Override
+    public void itemClickProdAgregados(detalleVenta detalle) {
+        if(accion=="borrar"){
+            Toast.makeText(getApplicationContext(),detalle.getNomProd()+"Borrar",Toast.LENGTH_SHORT).show();
+            eliminarProductoAgregado(detalle.getId());
+        }else{
+            if(detalle.getCant()<=1){
+                Toast.makeText(getApplicationContext(),detalle.getNomProd()+"Borrar",Toast.LENGTH_SHORT).show();
+                eliminarProductoAgregado(detalle.getId());
+            }else{
+                Toast.makeText(getApplicationContext(),detalle.getNomProd()+"disminuye",Toast.LENGTH_SHORT).show();
+                disminuyeProductoAgregado(detalle.getIdProd(),detalle.getCant(),detalle.getNumeroventa());
+            }
+
+        }
+    }
 
     //*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //guardar detalle
@@ -272,19 +367,19 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         }
     }
 
-    private void GuardarDEtalleVenta(int idprod){
+    private void GuardarDEtalleVenta(int idprod,double precio){
         SQLiteDatabase db=conn.getWritableDatabase();
         ContentValues values=new ContentValues();
 
         values.put(Utilidades.DETALLEV_ID,siguienteNDetalle);
-        values.put(Utilidades.DETALLEV_NUMEROV,siguienteNumVenta);
+        values.put(Utilidades.DETALLEV_NUMEROV,numeroventa.getText().toString());
         values.put(Utilidades.DETALLEV_IDPROD,idprod);
         values.put(Utilidades.DETALLEV_NOMPROD,nomproducto.getEditText().getText().toString());
-        values.put(Utilidades.DETALLEV_CANTIDAD,cantiproducto.getEditText().getText().toString());
+        values.put(Utilidades.DETALLEV_CANTIDAD,Integer.parseInt(cantiproducto.getEditText().getText().toString()));
+        values.put(Utilidades.DETALLEV_PRECIOPROD,precio);
 
-        Long idresultante=db.insert(Utilidades.TABLA_DETAVENTA,Utilidades.DETALLEV_ID,values);
-
-        Toast.makeText(getApplicationContext(),"ID Registro: "+idresultante,Toast.LENGTH_SHORT).show();
+        db.insert(Utilidades.TABLA_DETAVENTA,Utilidades.DETALLEV_ID,values);
+        Toast.makeText(getApplicationContext(),"Se Agrego El Producto",Toast.LENGTH_SHORT).show();
         limpiacamposDetalle();
     }
 
@@ -292,6 +387,51 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         IdDetalle();
         nomproducto.getEditText().setText("");
         cantiproducto.getEditText().setText("");
-        monto.getEditText().setText("");
     }
+
+    private void disminuyeProductoAgregado(int idp,int cant,String nventa){
+        SQLiteDatabase db=conn.getWritableDatabase();
+        String [] parametros={idp+"",nventa};
+        cant=cant-1;
+        ContentValues values=new ContentValues();
+        values.put(Utilidades.DETALLEV_CANTIDAD,cant);
+        db.update(Utilidades.TABLA_DETAVENTA,values,Utilidades.DETALLEV_IDPROD+"=? and "
+                +Utilidades.DETALLEV_NUMEROV+"=?",parametros);
+        Toast.makeText(getApplicationContext(),"Se actualizo",Toast.LENGTH_SHORT).show();
+        db.close();
+        cargarRecyclerProdAgregados(recyclerProdAgregados,numeroventa.getText().toString());
+        IdDetalle();
+        ObtenerMontoTotal(numeroventa.getText().toString());
+    }
+
+    private void eliminarProductoAgregado(int idv){
+        SQLiteDatabase db=conn.getWritableDatabase();
+        String [] parametros={idv+""};
+
+        db.delete(Utilidades.TABLA_DETAVENTA,Utilidades.DETALLEV_ID+"=?",parametros);
+        db.close();
+        Toast.makeText(getApplicationContext(),"Se elimino",Toast.LENGTH_SHORT).show();
+        cargarRecyclerProdAgregados(recyclerProdAgregados,numeroventa.getText().toString());
+        IdDetalle();
+        ObtenerMontoTotal(numeroventa.getText().toString());
+    }
+
+    private void ObtenerMontoTotal(String nuventaa){
+        SQLiteDatabase db=conn.getReadableDatabase();
+        try {
+            Cursor cursor =db.rawQuery("select sum("+Utilidades.DETALLEV_CANTIDAD+"*"+Utilidades.DETALLEV_PRECIOPROD+") " +
+                    "from "+Utilidades.TABLA_DETAVENTA+" where "+Utilidades.DETALLEV_NUMEROV+"="+nuventaa,null);
+            cursor.moveToFirst();
+            montoTotal=cursor.getDouble(0);
+            if(montoTotal==0){
+                monto.getEditText().setText("");
+            }else{
+                monto.getEditText().setText(montoTotal+"");
+            }
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

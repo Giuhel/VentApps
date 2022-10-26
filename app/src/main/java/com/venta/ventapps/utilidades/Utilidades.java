@@ -49,6 +49,7 @@ public class Utilidades {
     public static final String DETALLEV_IDPROD="idProd";
     public static final String DETALLEV_NOMPROD="producto";
     public static final String DETALLEV_CANTIDAD="cantidad";
+    public static final String DETALLEV_PRECIOPROD="preVProd";
     public static final String crear_tabla_detalleventa="CREATE TABLE "+TABLA_DETAVENTA+" ("+DETALLEV_ID+" INTEGER, "+DETALLEV_NUMEROV+" TEXT, "+DETALLEV_IDPROD+ " INTEGER, "
-            +DETALLEV_NOMPROD+ " TEXT, "+DETALLEV_CANTIDAD+" INTEGER)";
+            +DETALLEV_NOMPROD+ " TEXT, "+DETALLEV_CANTIDAD+" INTEGER, "+DETALLEV_PRECIOPROD+" NUMERIC)";
 }

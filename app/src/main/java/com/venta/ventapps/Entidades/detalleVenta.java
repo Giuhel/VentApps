@@ -6,17 +6,21 @@ public class detalleVenta {
     int idProd;
     String nomProd;
     int cant;
+    double precio;
 
     public detalleVenta() {
     }
 
-    public detalleVenta(int id, String numeroventa, int idProd, String nomProd, int cant) {
+    public detalleVenta(int id, String numeroventa, int idProd, String nomProd, int cant,double precio) {
         this.id = id;
         this.numeroventa = numeroventa;
         this.idProd = idProd;
         this.nomProd = nomProd;
         this.cant = cant;
+        this.precio=precio;
     }
+
+
 
     public int getId() {
         return id;
@@ -56,5 +60,13 @@ public class detalleVenta {
 
     public void setCant(int cant) {
         this.cant = cant;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 }
