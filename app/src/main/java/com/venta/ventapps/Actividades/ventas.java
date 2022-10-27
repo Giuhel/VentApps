@@ -45,8 +45,8 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
     private int dia, mes, anio;
     CardView seleccionarProd;
 
-    TextInputLayout nomproducto,cantiproducto,monto;
-    MaterialButton agregaProd;
+    TextInputLayout nomproducto,cantiproducto,monto,cliente;
+    MaterialButton agregaProd,RegistraVenta;
 
     Spinner spnMetpago;
     conexionSQLite conn;
@@ -76,7 +76,9 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         nomproducto = findViewById(R.id.ventaNombreProducto);
         cantiproducto = findViewById(R.id.ventaCantProd);
         monto = findViewById(R.id.ventaMontoPagar);
+        cliente=findViewById(R.id.ventaCliente);
         agregaProd = findViewById(R.id.botonAgregaProducto);
+        RegistraVenta = findViewById(R.id.btnCrearVenta);
 
         conn=new conexionSQLite(getApplicationContext(),"ventApps",null,1);
 
@@ -109,7 +111,22 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         agregaProd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GuardarDEtalleVenta(idproducto,precioprod);
+                if(nomproducto.getEditText().getText().toString().isEmpty()||cantiproducto.getEditText().getText().toString().isEmpty()
+                 ||monto.getEditText().getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Seleccione producto",Toast.LENGTH_SHORT).show();
+                }else{
+                    GuardarDEtalleVenta(idproducto,precioprod);
+                }
+            }
+        });
+        RegistraVenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(monto.getEditText().getText().toString().isEmpty()){
+
+                }else {
+                    GuardarVenta();
+                }
             }
         });
     }
@@ -119,16 +136,23 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         try {
             Cursor cursor =db.rawQuery("select max("+ Utilidades.NUMERO_VENTA+") from "+Utilidades.TABLA_VENTA,null);
             cursor.moveToFirst();
-            siguienteNumVenta=cursor.getInt(0);
+            String numventa=cursor.getString(0);
+            if(numventa==null){
+                numventa="000";
+            }
+            siguienteNumVenta= Integer.parseInt(numventa);
             if(siguienteNumVenta==0){
                 siguienteNumVenta=1;
                 numeroventa.setText("00"+siguienteNumVenta);
             }else{
                 if(siguienteNumVenta<=9){
+                    siguienteNumVenta=siguienteNumVenta+1;
                     numeroventa.setText("00"+siguienteNumVenta);
                 }else if(siguienteNumVenta>9 && siguienteNumVenta<=99){
+                    siguienteNumVenta=siguienteNumVenta+1;
                     numeroventa.setText("0"+siguienteNumVenta);
                 }else{
+                    siguienteNumVenta=siguienteNumVenta+1;
                     numeroventa.setText(siguienteNumVenta+"");
                 }
             }
@@ -284,9 +308,13 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
             public void onClick(View view) {
                 idproducto=idprod;
                 precioprod=precv;
-                enviaProducto(nomprod,Integer.parseInt(cant.getText().toString()),precv);
-                dialogo.dismiss();
-                dialog.dismiss();
+                if(!validarAgregado(idprod,numeroventa.getText().toString())){
+                    enviaProducto(nomprod,Integer.parseInt(cant.getText().toString()),precv);
+                    dialogo.dismiss();
+                    dialog.dismiss();
+                }else{
+                    Toast.makeText(ventas.this, "El producto ya esta agregado", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -382,6 +410,22 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         limpiacamposDetalle();
     }
 
+    //validadar que si el producto ya esta agregado
+    private boolean validarAgregado(int idp,String nventaaa){
+        SQLiteDatabase db=conn.getReadableDatabase();
+        int valida;
+        Cursor cursor =db.rawQuery("select count(*) from "+Utilidades.TABLA_DETAVENTA+" WHERE " +
+                    Utilidades.DETALLEV_IDPROD+"="+idp+" and "+Utilidades.DETALLEV_NUMEROV+"='"+nventaaa+"'",null);
+        cursor.moveToFirst();
+        valida=cursor.getInt(0);
+        if(valida==0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    //************************************************************************************
+
     private void limpiacamposDetalle() {
         IdDetalle();
         nomproducto.getEditText().setText("");
@@ -436,6 +480,25 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
     }
 
     private void GuardarVenta(){
+        SQLiteDatabase db=conn.getWritableDatabase();
+        ContentValues values=new ContentValues();
 
+        values.put(Utilidades.NUMERO_VENTA,numeroventa.getText().toString());
+        values.put(Utilidades.FECHA_VENTA,fec.getText().toString());
+        values.put(Utilidades.MONTO_VENTA,montoTotal);
+        values.put(Utilidades.CLIENTE_VENTA,cliente.getEditText().getText().toString());
+        values.put(Utilidades.METPAGO_VENTA,spnMetpago.getSelectedItem().toString());
+
+        db.insert(Utilidades.TABLA_VENTA,Utilidades.NUMERO_VENTA,values);
+        Toast.makeText(getApplicationContext(),"Se Registro la venta",Toast.LENGTH_SHORT).show();
+        limpiamosCamposPostVEnta();
+    }
+
+    private void limpiamosCamposPostVEnta() {
+        NumeroVenta();
+        nomproducto.getEditText().setText("");
+        cantiproducto.getEditText().setText("");
+        monto.getEditText().setText("");
+        cliente.getEditText().setText("");
     }
 }
