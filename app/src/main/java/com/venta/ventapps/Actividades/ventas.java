@@ -41,7 +41,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
                             AdapterProdAgregados.RecylerItemCLick{
 
     LinearLayout inputF;
-    TextView fec,numeroventa;
+    TextView fec,numeroventa,prodagregados;
     private int dia, mes, anio;
     CardView seleccionarProd;
 
@@ -54,7 +54,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
     RecyclerView recyclerProdAgregados;
 
-    int siguienteNumVenta,siguienteNDetalle;
+    int siguienteNumVenta,siguienteNDetalle,cantProdAgregados;
 
     AlertDialog dialog = null;
     int idproducto;
@@ -79,6 +79,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         cliente=findViewById(R.id.ventaCliente);
         agregaProd = findViewById(R.id.botonAgregaProducto);
         RegistraVenta = findViewById(R.id.btnCrearVenta);
+        prodagregados = findViewById(R.id.txtprodAgregados);
 
         conn=new conexionSQLite(getApplicationContext(),"ventApps",null,1);
 
@@ -86,6 +87,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         NumeroVenta();
         IdDetalle();
         llenarSpiner();
+        CantidadProductosAgregados(numeroventa.getText().toString());
         ObtenerMontoTotal(numeroventa.getText().toString());
         botones();
     }
@@ -430,6 +432,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         IdDetalle();
         nomproducto.getEditText().setText("");
         cantiproducto.getEditText().setText("");
+        CantidadProductosAgregados(numeroventa.getText().toString());
     }
 
     private void disminuyeProductoAgregado(int idp,int cant,String nventa){
@@ -440,11 +443,11 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         values.put(Utilidades.DETALLEV_CANTIDAD,cant);
         db.update(Utilidades.TABLA_DETAVENTA,values,Utilidades.DETALLEV_IDPROD+"=? and "
                 +Utilidades.DETALLEV_NUMEROV+"=?",parametros);
-        Toast.makeText(getApplicationContext(),"Se actualizo",Toast.LENGTH_SHORT).show();
         db.close();
         cargarRecyclerProdAgregados(recyclerProdAgregados,numeroventa.getText().toString());
         IdDetalle();
         ObtenerMontoTotal(numeroventa.getText().toString());
+        CantidadProductosAgregados(numeroventa.getText().toString());
     }
 
     private void eliminarProductoAgregado(int idv){
@@ -453,10 +456,10 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
         db.delete(Utilidades.TABLA_DETAVENTA,Utilidades.DETALLEV_ID+"=?",parametros);
         db.close();
-        Toast.makeText(getApplicationContext(),"Se elimino",Toast.LENGTH_SHORT).show();
         cargarRecyclerProdAgregados(recyclerProdAgregados,numeroventa.getText().toString());
         IdDetalle();
         ObtenerMontoTotal(numeroventa.getText().toString());
+        CantidadProductosAgregados(numeroventa.getText().toString());
     }
 
     private void ObtenerMontoTotal(String nuventaa){
@@ -492,6 +495,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         db.insert(Utilidades.TABLA_VENTA,Utilidades.NUMERO_VENTA,values);
         Toast.makeText(getApplicationContext(),"Se Registro la venta",Toast.LENGTH_SHORT).show();
         limpiamosCamposPostVEnta();
+        CantidadProductosAgregados(numeroventa.getText().toString());
     }
 
     private void limpiamosCamposPostVEnta() {
@@ -500,5 +504,19 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         cantiproducto.getEditText().setText("");
         monto.getEditText().setText("");
         cliente.getEditText().setText("");
+    }
+
+    private void CantidadProductosAgregados(String nvent) {
+        SQLiteDatabase db = conn.getReadableDatabase();
+        int total;
+        try {
+            Cursor cursor =db.rawQuery("select count(*) from "+Utilidades.TABLA_DETAVENTA+ " WHERE "+Utilidades.DETALLEV_NUMEROV+"='"+nvent+"'",null);
+            cursor.moveToFirst();
+            total = cursor.getInt(0);
+            prodagregados.setText("Productos Agregados: "+total);
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

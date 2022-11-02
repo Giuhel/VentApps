@@ -291,9 +291,10 @@
                     android:layout_marginEnd="20sp">
 
                     <TextView
+                        android:id="@+id/txtprodAgregados"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Productos Agregados: 3"
+                        android:text="Productos Agregados: "
                         android:textSize="15dp"
                         android:textStyle="bold"
                         android:layout_marginStart="10sp"
