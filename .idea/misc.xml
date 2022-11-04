@@ -31,6 +31,7 @@
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_slpash.xml" value="0.22" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_splash.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_ventas.xml" value="0.25" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/dialogo_elegircliente.xml" value="0.18931159420289856" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/dialogo_productos_agregados_v.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/dialogo_seleccionproducto.xml" value="0.19384057971014493" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/fragment_acerca_de.xml" value="0.25" />
@@ -41,10 +42,12 @@
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/ingresar_cant_a_vender.xml" value="0.14" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/ingresar_cantidad_avender.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_categoria.xml" value="0.203125" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_cliente_venta.xml" value="0.18860103626943006" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_clientes.xml" value="0.3351851851851852" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_elegirproductos.xml" value="0.21" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_prod_agregados.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_productos.xml" value="0.25" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_listcliente_venta.xml" value="0.33" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/menu/buttom_menu.xml" value="0.203125" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/menu/menuinferior.xml" value="0.203125" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1715" />

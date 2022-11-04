@@ -55,6 +55,13 @@ public class AdapterProdAgregados extends RecyclerView.Adapter<AdapterProdAgrega
                 itemCLick.itemClickProdAgregados(item);
             }
         });
+        holder.mas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ventas.accion="mas";
+                itemCLick.itemClickProdAgregados(item);
+            }
+        });
     }
 
 
@@ -67,7 +74,7 @@ public class AdapterProdAgregados extends RecyclerView.Adapter<AdapterProdAgrega
     public static class AdapterViewHolder extends RecyclerView.ViewHolder{
 
         TextView id,nom,cant,monto;
-        ImageButton borrar,menos;
+        ImageButton borrar,menos,mas;
 
         public AdapterViewHolder(@NonNull View vista) {
             super(vista);
@@ -78,6 +85,7 @@ public class AdapterProdAgregados extends RecyclerView.Adapter<AdapterProdAgrega
             monto=vista.findViewById(R.id.agregaMonto);
             borrar=vista.findViewById(R.id.aregaEliminatodo);
             menos=vista.findViewById(R.id.AgregaQuitar);
+            mas=vista.findViewById(R.id.aregaAdiciona);
         }
     }
 

@@ -9,6 +9,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.venta.ventapps.Actividades.clientes.DetalleCliente;
 import com.venta.ventapps.Actividades.clientes.ListadeCientes;
 import com.venta.ventapps.Adapters.AdaptadorClientes;
+import com.venta.ventapps.Adapters.AdaptadorClientesVenta;
 import com.venta.ventapps.Adapters.AdapterEligeProducto;
 import com.venta.ventapps.Adapters.AdapterProdAgregados;
 import com.venta.ventapps.Entidades.Clientes;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ventas extends AppCompatActivity implements AdapterEligeProducto.RecylerItemCLick,
-                            AdapterProdAgregados.RecylerItemCLick{
+        AdapterProdAgregados.RecylerItemCLick, AdaptadorClientesVenta.RecylerItemCLickVentas {
 
     LinearLayout inputF;
     TextView fec,numeroventa,prodagregados;
@@ -46,7 +47,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
     CardView seleccionarProd;
 
     TextInputLayout nomproducto,cantiproducto,monto,cliente;
-    MaterialButton agregaProd,RegistraVenta;
+    MaterialButton agregaProd,RegistraVenta,elegirCliente;
 
     Spinner spnMetpago;
     conexionSQLite conn;
@@ -54,9 +55,11 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
     RecyclerView recyclerProdAgregados;
 
-    int siguienteNumVenta,siguienteNDetalle,cantProdAgregados;
+    int siguienteNumVenta,siguienteNDetalle;
+    int idclientee=0;
 
     AlertDialog dialog = null;
+    AlertDialog dialogcliente = null;
     int idproducto;
     double precioprod;
     public static String accion;
@@ -80,6 +83,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         agregaProd = findViewById(R.id.botonAgregaProducto);
         RegistraVenta = findViewById(R.id.btnCrearVenta);
         prodagregados = findViewById(R.id.txtprodAgregados);
+        elegirCliente = findViewById(R.id.btnelegirCliente);
 
         conn=new conexionSQLite(getApplicationContext(),"ventApps",null,1);
 
@@ -131,6 +135,56 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
                 }
             }
         });
+        elegirCliente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogo_elegirCliente();
+            }
+        });
+    }
+
+    private void dialogo_elegirCliente() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        LayoutInflater inflater=getLayoutInflater();
+        View v=inflater.inflate(R.layout.dialogo_elegircliente,null);
+        builder.setView(v);
+
+        dialogcliente=builder.create();
+        dialogcliente.show();
+
+        ImageButton cerrar=v.findViewById(R.id.btnCloseEligeCliente);
+        RecyclerView listaclientes=v.findViewById(R.id.listElegirCliente);
+
+        CargarRecyclerCLientes(listaclientes);
+
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogcliente.dismiss();
+            }
+        });
+    }
+
+    private void CargarRecyclerCLientes(RecyclerView lista){
+        SQLiteDatabase db=conn.getReadableDatabase();
+        Clientes clientes=null;
+        ArrayList<Clientes> listaclientes = new ArrayList<>();
+
+        Cursor cursor =db.rawQuery("select * from "+ Utilidades.TABLA_CLIENTE ,null);
+        while (cursor.moveToNext()){
+            clientes=new Clientes();
+            clientes.setId(cursor.getInt(0));
+            clientes.setNombre(cursor.getString(1));
+            clientes.setTipodoc(cursor.getString(2));
+            clientes.setDocumento(cursor.getString(3));
+            clientes.setTelefono(cursor.getString(4));
+            clientes.setCorreo(cursor.getString(5));
+            listaclientes.add(clientes);
+        }
+        AdaptadorClientesVenta adapter=new AdaptadorClientesVenta(listaclientes,this);
+        lista.setLayoutManager(new LinearLayoutManager(this));
+        lista.setAdapter(adapter);
+        db.close();
     }
 
     private void NumeroVenta(){
@@ -297,7 +351,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
         ImageButton cerrar=v.findViewById(R.id.cant_Cerrar);
         MaterialButton agrega=v.findViewById(R.id.ingresarCantidad);
-        EditText cant=v.findViewById(R.id.cant_cantidad);
+        EditText canti=v.findViewById(R.id.cant_cantidad);
 
         cerrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -311,7 +365,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
                 idproducto=idprod;
                 precioprod=precv;
                 if(!validarAgregado(idprod,numeroventa.getText().toString())){
-                    enviaProducto(nomprod,Integer.parseInt(cant.getText().toString()),precv);
+                    enviaProducto(nomprod,Integer.parseInt(canti.getText().toString()),precv);
                     dialogo.dismiss();
                     dialog.dismiss();
                 }else{
@@ -353,24 +407,22 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
     @Override
     public void itemClickEligeProd(Productos productos) {
-        Toast.makeText(getApplicationContext(),productos.getId()+"",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),productos.getId()+"",Toast.LENGTH_SHORT).show();
         dialogo_Ingresar_Cantidad(productos.getNombre(),productos.getPreciov(),productos.getId());
     }
 
     @Override
     public void itemClickProdAgregados(detalleVenta detalle) {
         if(accion=="borrar"){
-            Toast.makeText(getApplicationContext(),detalle.getNomProd()+"Borrar",Toast.LENGTH_SHORT).show();
             eliminarProductoAgregado(detalle.getId());
-        }else{
+        }else if(accion=="disminuye"){
             if(detalle.getCant()<=1){
-                Toast.makeText(getApplicationContext(),detalle.getNomProd()+"Borrar",Toast.LENGTH_SHORT).show();
                 eliminarProductoAgregado(detalle.getId());
             }else{
-                Toast.makeText(getApplicationContext(),detalle.getNomProd()+"disminuye",Toast.LENGTH_SHORT).show();
                 disminuyeProductoAgregado(detalle.getIdProd(),detalle.getCant(),detalle.getNumeroventa());
             }
-
+        }else{
+            aumentaProductoAgregado(detalle.getIdProd(),detalle.getCant(),detalle.getNumeroventa());
         }
     }
 
@@ -385,10 +437,8 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
             siguienteNDetalle=cursor.getInt(0);
             if(siguienteNDetalle==0){
                 siguienteNDetalle=1;
-                Toast.makeText(getApplicationContext(),siguienteNDetalle+"",Toast.LENGTH_SHORT).show();
             }else{
                 siguienteNDetalle=siguienteNDetalle+1;
-                Toast.makeText(getApplicationContext(),siguienteNDetalle+"",Toast.LENGTH_SHORT).show();
             }
             cursor.close();
         } catch (Exception e) {
@@ -448,6 +498,23 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         IdDetalle();
         ObtenerMontoTotal(numeroventa.getText().toString());
         CantidadProductosAgregados(numeroventa.getText().toString());
+        subtotal=montoTotal;
+    }
+
+    private void aumentaProductoAgregado(int idp,int cant,String nventa){
+        SQLiteDatabase db=conn.getWritableDatabase();
+        String [] parametros={idp+"",nventa};
+        cant=cant+1;
+        ContentValues values=new ContentValues();
+        values.put(Utilidades.DETALLEV_CANTIDAD,cant);
+        db.update(Utilidades.TABLA_DETAVENTA,values,Utilidades.DETALLEV_IDPROD+"=? and "
+                +Utilidades.DETALLEV_NUMEROV+"=?",parametros);
+        db.close();
+        cargarRecyclerProdAgregados(recyclerProdAgregados,numeroventa.getText().toString());
+        IdDetalle();
+        ObtenerMontoTotal(numeroventa.getText().toString());
+        CantidadProductosAgregados(numeroventa.getText().toString());
+        subtotal=montoTotal;
     }
 
     private void eliminarProductoAgregado(int idv){
@@ -460,6 +527,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         IdDetalle();
         ObtenerMontoTotal(numeroventa.getText().toString());
         CantidadProductosAgregados(numeroventa.getText().toString());
+        subtotal=montoTotal;
     }
 
     private void ObtenerMontoTotal(String nuventaa){
@@ -471,10 +539,8 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
             montoTotal=cursor.getDouble(0);
             if(montoTotal==0){
                 monto.getEditText().setText("");
-                Toast.makeText(getApplicationContext(), montoTotal+"", Toast.LENGTH_SHORT).show();
             }else{
                 monto.getEditText().setText(montoTotal+"");
-                Toast.makeText(getApplicationContext(), montoTotal+"", Toast.LENGTH_SHORT).show();
             }
             cursor.close();
         } catch (Exception e) {
@@ -489,6 +555,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         values.put(Utilidades.NUMERO_VENTA,numeroventa.getText().toString());
         values.put(Utilidades.FECHA_VENTA,fec.getText().toString());
         values.put(Utilidades.MONTO_VENTA,montoTotal);
+        values.put(Utilidades.IDCLIENTE_VENTA,idclientee);
         values.put(Utilidades.CLIENTE_VENTA,cliente.getEditText().getText().toString());
         values.put(Utilidades.METPAGO_VENTA,spnMetpago.getSelectedItem().toString());
 
@@ -518,5 +585,12 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void itemClickClientesVentas(Clientes clientes) {
+        cliente.getEditText().setText(clientes.getNombre());
+        idclientee=clientes.getId();
+        dialogcliente.dismiss();
     }
 }

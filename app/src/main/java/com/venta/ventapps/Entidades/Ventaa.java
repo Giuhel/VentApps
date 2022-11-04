@@ -4,20 +4,29 @@ public class Ventaa {
     String numV;
     String fecha;
     double monto;
+    int idcliente;
     String cliente;
     String metodoPago;
 
     public Ventaa() {
     }
 
-    public Ventaa(String numV, String fecha, double monto, String cliente, String metodoPago) {
+    public Ventaa(String numV, String fecha, double monto,int idcliente, String cliente, String metodoPago) {
         this.numV = numV;
         this.fecha = fecha;
         this.monto = monto;
+        this.idcliente= idcliente;
         this.cliente = cliente;
         this.metodoPago = metodoPago;
     }
 
+    public int getIdcliente() {
+        return idcliente;
+    }
+
+    public void setIdcliente(int idcliente) {
+        this.idcliente = idcliente;
+    }
 
     public String getNumV() {
         return numV;

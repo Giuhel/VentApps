@@ -36,10 +36,11 @@ public class Utilidades {
     public static final String NUMERO_VENTA="numerov";
     public static final String FECHA_VENTA="fecha";
     public static final String MONTO_VENTA="monto";
+    public static final String IDCLIENTE_VENTA="idCliente";
     public static final String CLIENTE_VENTA="cliente";
     public static final String METPAGO_VENTA="metodopago";
     public static final String crear_tabla_venta="CREATE TABLE "+TABLA_VENTA+" ("+NUMERO_VENTA+" TEXT, "+FECHA_VENTA+" TEXT, "+MONTO_VENTA+ " NUMERIC, "
-                                                    +CLIENTE_VENTA+ " TEXT, "+METPAGO_VENTA+" TEXT)";
+                                                    +IDCLIENTE_VENTA+ " INTEGER, "+CLIENTE_VENTA+ " TEXT, "+METPAGO_VENTA+" TEXT)";
 
 
     //TAbla DEtalle Venta
