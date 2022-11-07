@@ -60,7 +60,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
     AlertDialog dialog = null;
     AlertDialog dialogcliente = null;
-    int idproducto;
+    int idproducto,stockActual,canti;//canti variablea para controlar el stock
     double precioprod;
     public static String accion;
     double subtotal;
@@ -122,6 +122,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
                     Toast.makeText(getApplicationContext(),"Seleccione producto",Toast.LENGTH_SHORT).show();
                 }else{
                     GuardarDEtalleVenta(idproducto,precioprod);
+                    DisminuirStock(canti,idproducto);
                 }
             }
         });
@@ -132,6 +133,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
                 }else {
                     GuardarVenta();
+                    ObtenerMontoTotal(numeroventa.getText().toString());
                 }
             }
         });
@@ -351,7 +353,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
         ImageButton cerrar=v.findViewById(R.id.cant_Cerrar);
         MaterialButton agrega=v.findViewById(R.id.ingresarCantidad);
-        EditText canti=v.findViewById(R.id.cant_cantidad);
+        EditText cantii=v.findViewById(R.id.cant_cantidad);
 
         cerrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -364,10 +366,16 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
             public void onClick(View view) {
                 idproducto=idprod;
                 precioprod=precv;
+                canti=Integer.parseInt(cantii.getText().toString());
                 if(!validarAgregado(idprod,numeroventa.getText().toString())){
-                    enviaProducto(nomprod,Integer.parseInt(canti.getText().toString()),precv);
-                    dialogo.dismiss();
-                    dialog.dismiss();
+                    obtenerStockActual(idprod);
+                    if(stockActual<canti){
+                        Toast.makeText(ventas.this, "Stock Insuficiente", Toast.LENGTH_SHORT).show();
+                    }else{
+                        enviaProducto(nomprod,Integer.parseInt(cantii.getText().toString()),precv);
+                        dialogo.dismiss();
+                        dialog.dismiss();
+                    }
                 }else{
                     Toast.makeText(ventas.this, "El producto ya esta agregado", Toast.LENGTH_SHORT).show();
                 }
@@ -407,7 +415,6 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
     @Override
     public void itemClickEligeProd(Productos productos) {
-        //Toast.makeText(getApplicationContext(),productos.getId()+"",Toast.LENGTH_SHORT).show();
         dialogo_Ingresar_Cantidad(productos.getNombre(),productos.getPreciov(),productos.getId());
     }
 
@@ -415,9 +422,11 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
     public void itemClickProdAgregados(detalleVenta detalle) {
         if(accion=="borrar"){
             eliminarProductoAgregado(detalle.getId());
+            AumentaStock(detalle.getCant(),detalle.getIdProd());
         }else if(accion=="disminuye"){
             if(detalle.getCant()<=1){
                 eliminarProductoAgregado(detalle.getId());
+                AumentaStock(detalle.getCant(),detalle.getIdProd());
             }else{
                 disminuyeProductoAgregado(detalle.getIdProd(),detalle.getCant(),detalle.getNumeroventa());
             }
@@ -499,6 +508,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         ObtenerMontoTotal(numeroventa.getText().toString());
         CantidadProductosAgregados(numeroventa.getText().toString());
         subtotal=montoTotal;
+        AumentaStock(1,idp);
     }
 
     private void aumentaProductoAgregado(int idp,int cant,String nventa){
@@ -515,6 +525,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         ObtenerMontoTotal(numeroventa.getText().toString());
         CantidadProductosAgregados(numeroventa.getText().toString());
         subtotal=montoTotal;
+        DisminuirStock(1,idp);
     }
 
     private void eliminarProductoAgregado(int idv){
@@ -539,8 +550,10 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
             montoTotal=cursor.getDouble(0);
             if(montoTotal==0){
                 monto.getEditText().setText("");
+                subtotal=montoTotal;
             }else{
                 monto.getEditText().setText(montoTotal+"");
+                subtotal=montoTotal;
             }
             cursor.close();
         } catch (Exception e) {
@@ -585,6 +598,41 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void obtenerStockActual(int idpro){
+        SQLiteDatabase db=conn.getWritableDatabase();
+        Productos productos=null;
+        Cursor cursor =db.rawQuery("select * from "+ Utilidades.TABLA_PRODUCTOS +" where "+Utilidades.ID_PRODUCTO+"="+idpro,null);
+        while (cursor.moveToNext()){
+            productos=new Productos();
+            productos.setId(cursor.getInt(0));
+            productos.setNombre(cursor.getString(1));
+            productos.setCantidad(cursor.getInt(2));
+        }
+        stockActual=productos.getCantidad();
+    }
+
+    private void DisminuirStock(int cant,int idpro){
+        obtenerStockActual(idpro);
+        SQLiteDatabase db=conn.getWritableDatabase();
+        String [] parametros={idpro+""};
+        stockActual=stockActual-cant;
+        ContentValues values=new ContentValues();
+        values.put(Utilidades.CANTIDAD_PRODUCTO,stockActual);
+        db.update(Utilidades.TABLA_PRODUCTOS,values,Utilidades.ID_PRODUCTO+"=?",parametros);
+        db.close();
+    }
+
+    private void AumentaStock(int cant,int idpro){
+        obtenerStockActual(idpro);
+        SQLiteDatabase db=conn.getWritableDatabase();
+        String [] parametros={idpro+""};
+        stockActual=stockActual+cant;
+        ContentValues values=new ContentValues();
+        values.put(Utilidades.CANTIDAD_PRODUCTO,stockActual);
+        db.update(Utilidades.TABLA_PRODUCTOS,values,Utilidades.ID_PRODUCTO+"=?",parametros);
+        db.close();
     }
 
     @Override

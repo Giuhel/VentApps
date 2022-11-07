@@ -62,7 +62,6 @@ public class ListaProductos extends AppCompatActivity implements AdaptadorProduc
             case R.id.atraslistaProductos:
                 finish();
                 break;
-
         }
     }
 
