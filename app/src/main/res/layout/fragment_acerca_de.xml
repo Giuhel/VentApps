@@ -155,7 +155,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/btnTerminos" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btnfacebook"
+                android:id="@+id/facebook"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_marginLeft="20dp"
@@ -166,7 +166,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView8">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/btnFB"
+                    android:layout_width="111dp"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
@@ -191,16 +192,17 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btninstagram"
+                android:id="@+id/instagram"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:elevation="8dp"
                 android:layout_marginLeft="5dp"
                 app:cardCornerRadius="10sp"
-                app:layout_constraintStart_toEndOf="@+id/btnfacebook"
+                app:layout_constraintStart_toEndOf="@+id/facebook"
                 app:layout_constraintTop_toBottomOf="@+id/textView8">
 
                 <LinearLayout
+                    android:id="@+id/btnIG"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -226,16 +228,17 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btntiktok"
+                android:id="@+id/tiktok"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:elevation="8dp"
                 android:layout_marginLeft="5dp"
                 app:cardCornerRadius="10sp"
-                app:layout_constraintStart_toEndOf="@+id/btninstagram"
+                app:layout_constraintStart_toEndOf="@+id/instagram"
                 app:layout_constraintTop_toBottomOf="@+id/textView8">
 
                 <LinearLayout
+                    android:id="@+id/btntiktok"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -270,7 +273,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btninstagram" />
+                app:layout_constraintTop_toBottomOf="@+id/instagram" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnPedirApp"
