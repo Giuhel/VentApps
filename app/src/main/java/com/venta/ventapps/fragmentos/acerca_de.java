@@ -3,6 +3,8 @@ package com.venta.ventapps.fragmentos;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +54,7 @@ public class acerca_de extends Fragment {
     }
 
     LinearLayout instragram,facebook,tiktok;
+    CardView terminos;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +65,7 @@ public class acerca_de extends Fragment {
         instragram=vista.findViewById(R.id.btnIG);
         facebook=vista.findViewById(R.id.btnFB);
         tiktok=vista.findViewById(R.id.btntiktok);
+        terminos=vista.findViewById(R.id.btnTerminos);
 
         eventoBotones();
 
@@ -90,6 +94,12 @@ public class acerca_de extends Fragment {
                 llamarWEB(intent,"tiktok");
             }
         });
+        terminos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                llamarWEB(intent,"terminos");
+            }
+        });
     }
     private void llamarWEB(Intent intent,String web){
         String url = null;
@@ -99,6 +109,8 @@ public class acerca_de extends Fragment {
             url="https://www.facebook.com/helio.pizarro/";
         }else if(web=="tiktok"){
             url="https://www.tiktok.com/@giuhel_pip?lang=es";
+        }else if(web=="terminos"){
+            url="https://sites.google.com/view/polticas-de-seguridad-ventapps/p%C3%A1gina-principal";
         }
         intent= new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
