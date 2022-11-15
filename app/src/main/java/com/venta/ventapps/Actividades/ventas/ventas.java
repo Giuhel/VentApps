@@ -1,4 +1,4 @@
-package com.venta.ventapps.Actividades;
+package com.venta.ventapps.Actividades.ventas;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -6,9 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.venta.ventapps.Actividades.clientes.DetalleCliente;
-import com.venta.ventapps.Actividades.clientes.ListadeCientes;
-import com.venta.ventapps.Adapters.AdaptadorClientes;
 import com.venta.ventapps.Adapters.AdaptadorClientesVenta;
 import com.venta.ventapps.Adapters.AdapterEligeProducto;
 import com.venta.ventapps.Adapters.AdapterProdAgregados;
@@ -20,7 +17,6 @@ import com.venta.ventapps.R;
 import com.venta.ventapps.utilidades.Utilidades;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -44,14 +40,12 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
     LinearLayout inputF;
     TextView fec,numeroventa,prodagregados;
     private int dia, mes, anio;
-    CardView seleccionarProd;
 
     TextInputLayout nomproducto,cantiproducto,monto,cliente;
     MaterialButton agregaProd,RegistraVenta,elegirCliente;
 
     Spinner spnMetpago;
     conexionSQLite conn;
-
 
     RecyclerView recyclerProdAgregados;
 
@@ -74,7 +68,6 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         inputF = findViewById(R.id.inputfecha);
         fec = findViewById(R.id.txtfecha);
         spnMetpago = findViewById(R.id.MetodoPago);
-        seleccionarProd = findViewById(R.id.seleccprod);
         numeroventa = findViewById(R.id.numventa);
         nomproducto = findViewById(R.id.ventaNombreProducto);
         cantiproducto = findViewById(R.id.ventaCantProd);
@@ -133,7 +126,6 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
                 }else {
                     GuardarVenta();
-                    ObtenerMontoTotal(numeroventa.getText().toString());
                 }
             }
         });
@@ -388,6 +380,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         cantiproducto.getEditText().setText(cant+"");
         subtotal=subtotal+(cant*prev);
         monto.getEditText().setText(subtotal+"");
+        montoTotal=subtotal;
     }
 
     private void AbrirDialogoProdcutosAgregados(){
@@ -567,7 +560,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
 
         values.put(Utilidades.NUMERO_VENTA,numeroventa.getText().toString());
         values.put(Utilidades.FECHA_VENTA,fec.getText().toString());
-        values.put(Utilidades.MONTO_VENTA,montoTotal);
+        values.put(Utilidades.MONTO_VENTA,subtotal);
         values.put(Utilidades.IDCLIENTE_VENTA,idclientee);
         values.put(Utilidades.CLIENTE_VENTA,cliente.getEditText().getText().toString());
         values.put(Utilidades.METPAGO_VENTA,spnMetpago.getSelectedItem().toString());
@@ -576,6 +569,7 @@ public class ventas extends AppCompatActivity implements AdapterEligeProducto.Re
         Toast.makeText(getApplicationContext(),"Se Registro la venta",Toast.LENGTH_SHORT).show();
         limpiamosCamposPostVEnta();
         CantidadProductosAgregados(numeroventa.getText().toString());
+        ObtenerMontoTotal(numeroventa.getText().toString());
     }
 
     private void limpiamosCamposPostVEnta() {

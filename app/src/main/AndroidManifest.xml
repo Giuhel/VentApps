@@ -17,6 +17,14 @@
         android:theme="@style/Theme.VentApps"
         tools:targetApi="31">
         <activity
+            android:name=".Actividades.ventas.listDetalleVenta"
+            android:exported="false"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Actividades.ventas.ListaVentas"
+            android:exported="false"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".Actividades.productos.DetalleProducto"
             android:exported="false"
             android:launchMode="singleTask" />
@@ -33,7 +41,7 @@
             android:exported="false"
             android:launchMode="singleTask" />
         <activity
-            android:name=".Actividades.ventas"
+            android:name=".Actividades.ventas.ventas"
             android:exported="false"
             android:launchMode="singleTask" />
         <activity

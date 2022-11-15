@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Pastel"
-    tools:context=".Actividades.ventas">
+    tools:context=".Actividades.ventas.ventas">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"

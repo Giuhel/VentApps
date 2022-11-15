@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragmentos.dashboard"
-    >
+    tools:context=".fragmentos.dashboard">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -110,8 +109,7 @@
                             android:textStyle="bold"
                             android:textSize="15sp"
                             android:textColor="@color/grisletrasmenu"
-                            android:layout_gravity="center
-"
+                            android:layout_gravity="center"
                             android:layout_marginTop="2dp"/>
 
                     </LinearLayout>
@@ -142,8 +140,7 @@
                             android:textStyle="bold"
                             android:textSize="15sp"
                             android:textColor="@color/grisletrasmenu"
-                            android:layout_gravity="center
-"
+                            android:layout_gravity="center"
                             android:layout_marginTop="2dp"/>
 
                     </LinearLayout>
@@ -171,7 +168,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ventas"
+                            android:text="Nueva Venta"
                             android:textStyle="bold"
                             android:textSize="15sp"
                             android:textColor="@color/grisletrasmenu"
@@ -188,6 +185,37 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center">
+
+                    <LinearLayout
+                        android:id="@+id/menuListaVentas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="15dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:elevation="4dp"
+                            app:cardCornerRadius="8dp">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/lista"
+                                android:layout_gravity="center"/>
+
+                        </androidx.cardview.widget.CardView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ventas"
+                            android:textStyle="bold"
+                            android:textSize="15sp"
+                            android:textColor="@color/grisletrasmenu"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="2dp"/>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/menuAyuda"
@@ -216,8 +244,7 @@
                             android:textStyle="bold"
                             android:textSize="15sp"
                             android:textColor="@color/grisletrasmenu"
-                            android:layout_gravity="center
-"
+                            android:layout_gravity="center"
                             android:layout_marginTop="2dp"/>
 
                     </LinearLayout>

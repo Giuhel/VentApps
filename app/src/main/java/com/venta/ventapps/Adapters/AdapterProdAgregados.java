@@ -4,10 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.venta.ventapps.Actividades.ventas;
+import com.venta.ventapps.Actividades.ventas.ventas;
 import com.venta.ventapps.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

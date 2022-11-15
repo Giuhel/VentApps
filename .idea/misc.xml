@@ -8,7 +8,10 @@
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/edittext_bg.xml" value="0.1945" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/fondodasboard.xml" value="0.185" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_acercade.xml" value="0.185" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_calendario.xml" value="0.117" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_categoria.xml" value="0.117" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_cerrar.xml" value="0.14" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_code.xml" value="0.117" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_descripcion.xml" value="0.1745" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_editar.xml" value="0.1785" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/drawable/ic_estadistica.xml" value="0.185" />
@@ -23,7 +26,9 @@
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_clientes.xml" value="0.25" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_detalle_cliente.xml" value="0.25" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_detalle_producto.xml" value="0.20153985507246377" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_list_detalle_venta.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_lista_productos.xml" value="0.20153985507246377" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_lista_ventas.xml" value="0.33" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_listade_cientes.xml" value="0.25" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/activity_main.xml" value="0.25" />
@@ -48,6 +53,8 @@
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_elegirproductos.xml" value="0.21" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_prod_agregados.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_productos.xml" value="0.25" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_ventaas.xml" value="0.33" />
+        <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_list_ventas.xml" value="0.13831967213114754" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/layout/item_listcliente_venta.xml" value="0.33" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/menu/buttom_menu.xml" value="0.203125" />
         <entry key="..\:/Users/helio.pizarro/Desktop/App/VentApps/app/src/main/res/menu/menuinferior.xml" value="0.203125" />
