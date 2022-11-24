@@ -194,6 +194,30 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="juan perez"
+                            android:inputType="textMultiLine"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Documento: "
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtdocclienteDetalleventa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="78987678"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 

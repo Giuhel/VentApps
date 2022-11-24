@@ -10,9 +10,6 @@
         android:layout_height="wrap_content"
         android:background="@color/Pastel"
         android:padding="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:orientation="horizontal">
 
         <TextView

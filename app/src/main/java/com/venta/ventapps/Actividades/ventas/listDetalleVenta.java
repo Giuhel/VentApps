@@ -1,10 +1,12 @@
 package com.venta.ventapps.Actividades.ventas;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.venta.ventapps.Adapters.AdapterDetalleVenta;
 import com.venta.ventapps.Entidades.conexionSQLite;
 import com.venta.ventapps.Entidades.detalleVenta;
@@ -22,7 +24,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
+import android.telephony.PhoneNumberUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +40,7 @@ import java.util.ArrayList;
 
 public class listDetalleVenta extends AppCompatActivity {
 
-    TextView numventaa,fecha,metpago,total,cliente;
+    TextView numventaa,fecha,metpago,total,cliente,doccliente;
     ImageButton atras;
     MaterialButton comprobante,eliminar;
 
@@ -44,6 +49,9 @@ public class listDetalleVenta extends AppCompatActivity {
     AdapterDetalleVenta adapter;
     ArrayList<detalleVenta> listadetalle;
 
+    int idcliente;
+    String telefCliente;
+    Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +70,7 @@ public class listDetalleVenta extends AppCompatActivity {
         cliente=findViewById(R.id.clienteDetalleVenta);
         comprobante=findViewById(R.id.BtnComprobante);
         eliminar=findViewById(R.id.btnEliminarVenta);
+        doccliente=findViewById(R.id.txtdocclienteDetalleventa);
 
         conn=new conexionSQLite(getApplicationContext(),"ventApps",null,1);
         recyclerlista.setLayoutManager(new LinearLayoutManager(this));
@@ -72,6 +81,7 @@ public class listDetalleVenta extends AppCompatActivity {
             numventaa.setText(ide);
             CargarDAtosVenta(ide);
             cargarDEtalle(ide);
+            cargarDatosCliente(idcliente);
         }
         eventosClick();
     }
@@ -85,6 +95,7 @@ public class listDetalleVenta extends AppCompatActivity {
                 while (cursor.moveToNext()){
                     fecha.setText(cursor.getString(1));
                     total.setText(cursor.getDouble(2)+"");
+                    idcliente=cursor.getInt(3);
                     cliente.setText(cursor.getString(4));
                     metpago.setText(cursor.getString(5));
                 }
@@ -118,6 +129,26 @@ public class listDetalleVenta extends AppCompatActivity {
         db.close();
     }
 
+    private void cargarDatosCliente(int idclientee) {
+        try {
+            SQLiteDatabase db=conn.getReadableDatabase();
+
+            Cursor cursor=db.rawQuery("select * from "+ Utilidades.TABLA_CLIENTE +" where "+Utilidades.CAMPO_ID+"="+idclientee,null);
+            while (cursor.moveToNext()){
+                String doc=(cursor.getString(3));
+                if(doc==null){
+                    telefCliente="na";
+                }else{
+                    doccliente.setText(doc);
+                    telefCliente= cursor.getString(4);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"error de conexion",Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void eventosClick(){
         atras.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +159,6 @@ public class listDetalleVenta extends AppCompatActivity {
         comprobante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //capturar(getWindow().getDecorView().getRootView().findViewById(R.id.imgComprobante),numventaa.getText().toString());
                 Screenshot2();
             }
         });
@@ -151,15 +181,9 @@ public class listDetalleVenta extends AppCompatActivity {
             fileOutputStream.flush();
             fileOutputStream.close();
 
-            Uri uri= Uri.fromFile(file);
-            /*Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(uri,"image/*");
-            startActivity(intent);*/
-            Intent intentw=new Intent(Intent.ACTION_SEND);
-            intentw.setType("image/*");
-            intentw.setPackage("com.gbwhatsapp");
-            intentw.putExtra(Intent.EXTRA_STREAM,uri);
-            startActivity(intentw);
+            uri= Uri.fromFile(file);
+            EnviarComprobanteWPS(uri);
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -168,32 +192,55 @@ public class listDetalleVenta extends AppCompatActivity {
         }
     }
 
-    protected static File capturar(ConstraintLayout view,String filename){
+    private void EnviarComprobanteWPS(Uri urii){
+        if(telefCliente=="na"){
+            dialogo_Ingresar_NUMERO();
+        }else{
+            EnviarCAptura(urii);
+        }
+    }
+
+    private void EnviarCAptura(Uri urii){
         try {
-            String dirpath=Environment.getExternalStorageDirectory().toString() + "/Download/";
-            File filedir=new File(dirpath);
-            if(!filedir.exists()){
-                boolean mkdir=filedir.mkdir();
+            Intent intent = new Intent("android.intent.action.MAIN");
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_STREAM, urii);
+            intent.putExtra(Intent.EXTRA_TEXT,"Se envia una copia de su compra...");
+            intent.putExtra("jid", telefCliente + "@s.whatsapp.net"); //numero telefonico sin prefijo "+"!
+            intent.setPackage("com.whatsapp");
+            startActivity(intent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getApplicationContext(), "Whatsapp no esta instalado.", Toast.LENGTH_LONG).show();
+        }
+    }
 
+    private void dialogo_Ingresar_NUMERO(){
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        LayoutInflater inflater=getLayoutInflater();
+        View v=inflater.inflate(R.layout.dialogo_ingresartelefono,null);
+        builder.setView(v);
+
+        final AlertDialog dialogo=builder.create();
+        dialogo.show();
+
+        ImageButton cerrar=v.findViewById(R.id.btnCerrarNumero);
+        TextInputLayout numero=v.findViewById(R.id.numeroAwsp);
+        MaterialButton envia=v.findViewById(R.id.btnEnviaComprobante);
+
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogo.dismiss();
             }
-            String path=dirpath+ filename+".jpeg";
-            view.setDrawingCacheEnabled(true);
-            Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-            view.setDrawingCacheEnabled(false);
-
-            File imagefile=new File(path);
-
-            FileOutputStream fileOutputStream=new FileOutputStream(imagefile);
-            int quality=100;
-            bitmap.compress(Bitmap.CompressFormat.JPEG,quality,fileOutputStream);
-            fileOutputStream.flush();
-            fileOutputStream.close();
-            return imagefile;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }return null;
+        });
+        envia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                telefCliente=numero.getEditText().getText().toString();
+                EnviarCAptura(uri);
+            }
+        });
     }
 
     private static final int REQUEST_EXTERNAL_STORAGE=1;
