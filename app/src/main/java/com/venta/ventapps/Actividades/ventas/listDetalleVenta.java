@@ -82,6 +82,7 @@ public class listDetalleVenta extends AppCompatActivity {
             CargarDAtosVenta(ide);
             cargarDEtalle(ide);
             cargarDatosCliente(idcliente);
+            System.out.println(idcliente);
         }
         eventosClick();
     }
@@ -136,7 +137,7 @@ public class listDetalleVenta extends AppCompatActivity {
             Cursor cursor=db.rawQuery("select * from "+ Utilidades.TABLA_CLIENTE +" where "+Utilidades.CAMPO_ID+"="+idclientee,null);
             while (cursor.moveToNext()){
                 String doc=(cursor.getString(3));
-                if(doc==null){
+                if(idclientee==0){
                     telefCliente="na";
                 }else{
                     doccliente.setText(doc);
