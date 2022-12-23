@@ -82,7 +82,8 @@ public class listDetalleVenta extends AppCompatActivity {
             CargarDAtosVenta(ide);
             cargarDEtalle(ide);
             cargarDatosCliente(idcliente);
-            System.out.println(idcliente);
+            System.out.println("id clientes: "+idcliente);
+            System.out.println("telefono es: "+telefCliente);
         }
         eventosClick();
     }
@@ -131,17 +132,16 @@ public class listDetalleVenta extends AppCompatActivity {
     }
 
     private void cargarDatosCliente(int idclientee) {
+        System.out.println("el parametro :"+idclientee);
         try {
             SQLiteDatabase db=conn.getReadableDatabase();
-
             Cursor cursor=db.rawQuery("select * from "+ Utilidades.TABLA_CLIENTE +" where "+Utilidades.CAMPO_ID+"="+idclientee,null);
             while (cursor.moveToNext()){
-                String doc=(cursor.getString(3));
                 if(idclientee==0){
                     telefCliente="na";
                 }else{
-                    doccliente.setText(doc);
-                    telefCliente= cursor.getString(4);
+                    doccliente.setText(cursor.getString(3));
+                    telefCliente=cursor.getString(4);
                 }
             }
         } catch (Exception e) {
@@ -194,7 +194,7 @@ public class listDetalleVenta extends AppCompatActivity {
     }
 
     private void EnviarComprobanteWPS(Uri urii){
-        if(telefCliente=="na"){
+        if(telefCliente=="na"|| telefCliente==null){
             dialogo_Ingresar_NUMERO();
         }else{
             EnviarCAptura(urii);
@@ -239,6 +239,12 @@ public class listDetalleVenta extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 telefCliente=numero.getEditText().getText().toString();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("ajajaj: "+telefCliente);
                 EnviarCAptura(uri);
             }
         });

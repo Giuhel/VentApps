@@ -101,7 +101,7 @@
                             android:id="@+id/numventaDetalle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="001"
+                            android:text=""
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -124,7 +124,7 @@
                             android:id="@+id/FechaDetalleventa"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="22/11/2022"
+                            android:text=""
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -147,7 +147,7 @@
                             android:id="@+id/metodopagoDetalleVenta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Efectivo"
+                            android:text=""
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -170,7 +170,7 @@
                             android:id="@+id/totalDetlleVentaa"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="50.00"
+                            android:text=""
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -193,7 +193,7 @@
                             android:id="@+id/clienteDetalleVenta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="juan perez"
+                            android:text=""
                             android:inputType="textMultiLine"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -217,7 +217,7 @@
                             android:id="@+id/txtdocclienteDetalleventa"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="78987678"
+                            android:text=""
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
