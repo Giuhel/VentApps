@@ -18,8 +18,8 @@ import com.venta.ventapps.fragmentos.estadisticas;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView btnmenu;
-    Fragment fragment;
-    private FragmentManager manager;
+    public static Fragment fragment;
+    public static FragmentManager manager;
 
 
     @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void abrirFragment(Fragment fragment){
+    public static void abrirFragment(Fragment fragment){
         manager.beginTransaction()
                 .replace(R.id.freamecontenedor,fragment).commit();
     }

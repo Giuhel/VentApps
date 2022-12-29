@@ -14,6 +14,7 @@ import com.venta.ventapps.Actividades.Ayuda;
 import com.venta.ventapps.Actividades.clientes.clientes;
 import com.venta.ventapps.Actividades.ventas.ListaVentas;
 import com.venta.ventapps.Actividades.ventas.ventas;
+import com.venta.ventapps.MainActivity;
 import com.venta.ventapps.R;
 
 /**
@@ -61,7 +62,7 @@ public class dashboard extends Fragment {
         }
     }
 
-    LinearLayout menuClientes,menuAyuda,menuventa,listaVentas;
+    LinearLayout menuClientes,menuAyuda,menuventa,listaVentas,menuCategorias;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,11 +74,13 @@ public class dashboard extends Fragment {
         menuAyuda=vista.findViewById(R.id.menuAyuda);
         menuventa=vista.findViewById(R.id.menuVenta);
         listaVentas=vista.findViewById(R.id.menuListaVentas);
+        menuCategorias=vista.findViewById(R.id.menu_Categorias);
 
         menuClientes();
         menuAyudaa();
         menuVenta();
         menulistaVentas();
+        menuCategorias();
 
         return vista;
     }
@@ -88,6 +91,16 @@ public class dashboard extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), clientes.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void menuCategorias(){
+        MainActivity.fragment=Inventario.newInstance();
+        menuCategorias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.abrirFragment(MainActivity.fragment);
             }
         });
     }
