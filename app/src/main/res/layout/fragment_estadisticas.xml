@@ -13,16 +13,6 @@
         android:background="@color/Pastel">
 
         <TextView
-            android:id="@+id/btnAtrasEst"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/atras"
-            android:gravity="center_vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Estadísticas"
@@ -42,85 +32,57 @@
         android:background="@drawable/fondodasboard"
         android:layout_marginTop="71dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="15sp"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:id="@+id/inputfechaE"
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10sp"
-                    android:layout_marginBottom="10dp"
-                    android:src="@drawable/ic_calendario" />
-
-                <TextView
-                    android:id="@+id/txtfecha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:text="asd"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardView4"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_buscar"/>
-
-        </androidx.cardview.widget.CardView>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView4">
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3 Productos mas vendidos"
+                    android:textStyle="bold"
+                    android:textSize="19sp"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
 
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pastelProdVendidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3 clientes con mas compras"
+                    android:textStyle="bold"
+                    android:textSize="19sp"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"/>
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pastelclientesFrec"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"/>
 
             </LinearLayout>
-
 
         </ScrollView>
 

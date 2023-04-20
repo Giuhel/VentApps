@@ -134,4 +134,17 @@ public class conexionSQLite extends SQLiteOpenHelper {
             return null;
         }
     }
+
+    public Cursor getValues(){
+        SQLiteDatabase bd=this.getReadableDatabase();
+       Cursor c=bd.rawQuery("select sum("+Utilidades.DETALLEV_CANTIDAD+") as cantidad,"+Utilidades.DETALLEV_NOMPROD+" from "+ Utilidades.TABLA_DETAVENTA +" group by "+ Utilidades.DETALLEV_IDPROD+ " order by cantidad desc limit 0, 3",null);
+        //Cursor c=bd.rawQuery("select sum(cantidad)as suma,producto from bd_detaVenta group by idProd order by suma desc limit 0, 3",null);
+        return c;
+    }
+    public Cursor getValuesClientes(){
+        SQLiteDatabase bd=this.getReadableDatabase();
+        Cursor c=bd.rawQuery("select count("+Utilidades.IDCLIENTE_VENTA+") as cantidad,"+Utilidades.CLIENTE_VENTA+" from "+ Utilidades.TABLA_VENTA +" group by "+ Utilidades.IDCLIENTE_VENTA+ " order by cantidad desc limit 0, 3",null);
+        //Cursor c=bd.rawQuery("select sum(cantidad)as suma,producto from bd_detaVenta group by idProd order by suma desc limit 0, 3",null);
+        return c;
+    }
 }
