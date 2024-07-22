@@ -2,22 +2,22 @@ package com.venta.ventapps.Entidades;
 
 public class Categorias {
 
-    private int idcategoria;
+    private String idcategoria;
     private String nomCategoria;
 
     public Categorias() {
     }
 
-    public Categorias(int idcategoria, String nomCategoria) {
+    public Categorias(String idcategoria, String nomCategoria) {
         this.idcategoria = idcategoria;
         this.nomCategoria = nomCategoria;
     }
 
-    public int getIdcategoria() {
+    public String getIdcategoria() {
         return idcategoria;
     }
 
-    public void setIdcategoria(int idcategoria) {
+    public void setIdcategoria(String idcategoria) {
         this.idcategoria = idcategoria;
     }
 

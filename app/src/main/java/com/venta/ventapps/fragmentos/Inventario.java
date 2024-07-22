@@ -6,13 +6,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,20 +17,20 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.venta.ventapps.Actividades.Ayuda;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.venta.ventapps.Actividades.productos.ListaProductos;
 import com.venta.ventapps.Actividades.productos.productos;
 import com.venta.ventapps.Adapters.AdaptadorCategorias;
 import com.venta.ventapps.Entidades.Categorias;
 import com.venta.ventapps.Entidades.conexionSQLite;
-import com.venta.ventapps.MainActivity;
 import com.venta.ventapps.R;
-import com.venta.ventapps.Splash;
 import com.venta.ventapps.utilidades.Utilidades;
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 /**
@@ -97,6 +94,9 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
     String accion="guardar";
     int cantCate=0;
 
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,6 +110,8 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
         recyclerlista=vista.findViewById(R.id.Rcvlistcategoria);
         atras=vista.findViewById(R.id.irListaProdcutos);
 
+        inicializarFireBase();
+
         conn=new conexionSQLite(getContext(),"ventApps",null,1);
         recyclerlista.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -117,6 +119,8 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
 
         TotalCategorias();
         TotalProdutos();
+
+
 
         crearProd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,8 +154,12 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
             }
         });
 
+        //FireBase;
+
+
         return vista;
     }
+
 
     public void RregistraCategoria(String idd,String nom,String c) {
         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
@@ -191,7 +199,8 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
             @Override
             public void onClick(View view) {
                 if(accion.equals("guardar")){
-                    accionREgstrar(id,nombre);
+                    //accionREgstrar(id,nombre);
+                    registrarFireBase(nombre);
                 }else{
                     accionEditar(id,nombre);
                 }
@@ -295,7 +304,7 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
         Cursor cursor =db.rawQuery("select * from "+ Utilidades.TABLA_CATEGORIA,null);
         while (cursor.moveToNext()){
             categorias=new Categorias();
-            categorias.setIdcategoria(cursor.getInt(0));
+            categorias.setIdcategoria(cursor.getInt(0)+"");
             categorias.setNomCategoria(cursor.getString(1));
             listacategorias.add(categorias);
         }
@@ -342,4 +351,17 @@ public class Inventario extends Fragment implements AdaptadorCategorias.RecylerI
         RregistraCategoria(categorias.getIdcategoria()+"",categorias.getNomCategoria(),"editar");
     }
 
+    //fire base
+    private void inicializarFireBase() {
+        FirebaseApp.initializeApp(this.getContext());
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+    }
+
+    public void registrarFireBase(TextInputLayout nombre){
+        Categorias c=new Categorias();
+        c.setIdcategoria(UUID.randomUUID().toString());
+        c.setNomCategoria(nombre.getEditText().getText().toString());
+        databaseReference.child("categoria").child(c.getIdcategoria()).setValue(c);
+    }
 }

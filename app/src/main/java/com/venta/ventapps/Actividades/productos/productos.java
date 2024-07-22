@@ -256,7 +256,7 @@ public class productos extends AppCompatActivity {
         Cursor cursor=db.rawQuery("Select * from "+ Utilidades.TABLA_CATEGORIA,null);
         while (cursor.moveToNext()){
             categorias=new Categorias();
-            categorias.setIdcategoria(cursor.getInt(0));
+            categorias.setIdcategoria(cursor.getString(0));
             categorias.setNomCategoria(cursor.getString(1));
 
             ListaCategoria.add(categorias);

@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.venta.ventapps.Entidades.conexionSQLite;
 import com.venta.ventapps.fragmentos.Inventario;
 import com.venta.ventapps.fragmentos.acerca_de;

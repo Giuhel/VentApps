@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "434609862738",
+    "firebase_url": "https://ventapps-6fb7b-default-rtdb.firebaseio.com",
+    "project_id": "ventapps-6fb7b",
+    "storage_bucket": "ventapps-6fb7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434609862738:android:48f94fb8299840270ac78b",
+        "android_client_info": {
+          "package_name": "com.venta.ventapps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ9PAE0hkH9LEB9ZLKZF0juqLJqYqLC6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
